@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head"/>
+<body>
+
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/> 
+
+
+
+<div class="container">
+  <h2>Publicaciones</h2>
+  <p>Las publicaciones que actualmente figuran en el sistema son las siguientes:</p>                                                                                      
+  <button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
+  <script>
+  		$( "#updateButton" ).click(function() {
+  			$("#tablePublications").load('/publication/list/update');
+  		});
+  </script>
+  <div class="table-responsive">          
+  <table class="table table-hover" th:fragment="tablePublications" id="tablePublications">
+    <thead>
+      <tr>
+        <th class="col-md-1">id</th>
+        <th>Titulo</th>
+        <th>Texto</th>
+        <th>Fecha</th>
+		<th class="col-md-1"> </th>
+		<th class="col-md-1"> </th>
+		<th class="col-md-1"> </th>
+      </tr>
+    </thead>
+	<tbody>
+	  <tr th:each="publication : ${publicationList}">
+	    <td th:text="${publication.id}"> 1</td>
+	    <td th:text="${publication.title}"> Titulo</td>
+	    <td th:text="${publication.text}">Texto</td>
+	    <td th:text="${publication.date">Fecha</td>
+	    <td><a th:href="${'/publication/details/' + publication.id}">detalles</a></td>
+	    <td><a th:href="${'/publication/delete/' + publication.id}">eliminar</a></td>
+	  </tr>
+	</tbody>
+  </table>
+  </div>
+</div>
+
+<footer th:replace="fragments/footer"/
+</body>
+</html>
