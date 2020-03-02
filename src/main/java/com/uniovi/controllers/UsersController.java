@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -28,9 +29,15 @@ public class UsersController {
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 
+	@Autowired
+	private RolesService rolesService;
+
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
-		model.addAttribute("user", new User());
+		User user = new User();
+		user.setRole(rolesService.getRoles()[1]);
+		model.addAttribute("user", user);
 		return "signup";
 	}
 
@@ -40,6 +47,7 @@ public class UsersController {
 		if( result.hasErrors()) {
 			return "signup";
 		}
+		user.setRole(rolesService.getRoles()[1]);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";

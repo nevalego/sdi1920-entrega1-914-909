@@ -20,10 +20,12 @@ public class User {
 	private String email;
 	private String name;
 	private String lastName;
+	private String role;
 	private String password;
 	@Transient // propiedad que no se almacena en la tabla
 	private String passwordConfirm;
 
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Publication> publications;
 
@@ -37,6 +39,10 @@ public class User {
 	public User() {
 	}
 
+	public String getRole() {
+		return role;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -100,6 +106,10 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", lastName=" + lastName + ", password="
 				+ password + ", passwordConfirm=" + passwordConfirm + ", publications=" + publications + "]";
+	}
+
+	public void setRole(String role) {
+		this.role=role;
 	}
 
 	

@@ -25,7 +25,7 @@ public class SignUpFormValidator implements Validator {
 		User user = (User) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
 
-		if (user.getEmail().length() < 14 || user.getEmail().length() > 40) {
+		if (user.getEmail().length() < 10 || user.getEmail().length() > 40) {
 			errors.rejectValue("email", "Error.signup.email.length");
 		}
 
@@ -35,7 +35,7 @@ public class SignUpFormValidator implements Validator {
 		if (user.getName().length() < 3 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
-		if (user.getLastName().length() < 5 || user.getLastName().length() > 24) {
+		if (user.getLastName().length() < 3 || user.getLastName().length() > 24) {
 			errors.rejectValue("lastName", "Error.signup.lastName.length");
 		}
 
