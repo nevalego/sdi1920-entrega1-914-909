@@ -1,0 +1,31 @@
+/*C14*/SET SCHEMA PUBLIC
+drop table if exists publication CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table publication (id bigint not null, date timestamp, text varchar(255), title varchar(255), user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table publication add constraint FKq2ei3a07e3ln96uel4alss2u7 foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'pepe@gmail.com','Martinez Soria','Pepe','$2a$10$zEwR138zMXCjkZUNlv8/lOwQ1rjn04hePxsYZQ01z0XM59sRqplbK',NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C23*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C14*/DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C22*/SET SCHEMA PUBLIC
+DISCONNECT
