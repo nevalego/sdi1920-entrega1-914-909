@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.User;
@@ -21,11 +20,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private UsersRepository usersRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) {
 		User user = usersRepository.findByEmail(email);
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+		
+	    
+		
+		return new org.springframework.security.core.userdetails.User(
+				user.getEmail(), user.getPassword(),
 				grantedAuthorities);
 	}
 

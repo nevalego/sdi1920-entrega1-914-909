@@ -35,9 +35,7 @@ public class UsersController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
-		User user = new User();
-		user.setRole(rolesService.getRoles()[1]);
-		model.addAttribute("user", user);
+		model.addAttribute("user", new User());
 		return "signup";
 	}
 
@@ -47,7 +45,7 @@ public class UsersController {
 		if( result.hasErrors()) {
 			return "signup";
 		}
-		user.setRole(rolesService.getRoles()[1]);
+		user.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
@@ -75,7 +73,7 @@ public class UsersController {
 
 	@RequestMapping(value = "/user/add")
 	public String getUser(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+		model.addAttribute("rolesList", rolesService.getRoles());
 		return "user/add";
 	}
 
@@ -106,8 +104,11 @@ public class UsersController {
 
 	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
 	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-		user.setId(id);
-		usersService.addUser(user);
+		User original = usersService.getUser(id);
+		original.setEmail(user.getEmail());
+		original.setName(user.getName());
+		original.setLastName(user.getLastName());
+		usersService.addUser(original);
 		return "redirect:/user/details/" + id;
 	}
 }

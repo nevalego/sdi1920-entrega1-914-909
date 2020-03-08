@@ -50,8 +50,8 @@
 								th:text="#{language.es}">Español</span>
 						</a></li>
 					</ul></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/signup" th:text="#{signup.message}"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
+				<li sec:authorize="!isAuthenticated()"><a id="signup" href="/signup" th:text="#{signup.message}"> <span
+						class="btn btn-primary"></span> Registrate
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login" th:text="#{login.message}"> <span
 						class="glyphicon glyphicon-log-in"></span> Iniciar sesión
