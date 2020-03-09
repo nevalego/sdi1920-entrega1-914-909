@@ -81,8 +81,13 @@ public class UsersController {
 		
 		if( activeUser.getRole().equals(rolesService.getRoles()[1])) {
 			// Si es Admin devuelve todos los usuarios del sistema
-			users = usersService.getUsers();
+			if( searchText != null && !searchText.isEmpty() ) {
+				users = usersService.searchUserByNameLastNameAndEmail(searchText);
+			} else {
+				users = usersService.getUsers();
+			}
 			model.addAttribute("usersList", users);
+			
 		} else {
 			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
 			

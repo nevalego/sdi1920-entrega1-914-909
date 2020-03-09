@@ -42,7 +42,14 @@ public class UsersService {
 	public Page<User> searchUserByNameLastNameAndEmail(Pageable pageable,String searchText) {
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		searchText = "%"+searchText+"%";
-		users = usersRepository.searchByNameAndSurname(pageable, searchText);
+		users = usersRepository.searchByNameLastnameAndEmailP(pageable, searchText);
+	
+		return users;
+	}
+	
+	public List<User> searchUserByNameLastNameAndEmail(String searchText) {
+		searchText = "%"+searchText+"%";
+		List<User> users = usersRepository.searchByNameLastnameAndEmail(searchText);
 	
 		return users;
 	}
