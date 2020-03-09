@@ -164,35 +164,56 @@ public class RedSocialTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
 
 	}
-	
+
 	// Prueba 7 inicio de sesion con datos invalidos
-	//Campos Vacios
+	// Campos Vacios
+	@Test
+	public void Prueba7() {
+		// Vamos al formulario de loggin
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "", "");
+		PO_View.getP();
+		// En caso de que se dejen vacios devuelve los mensajes de error respectivos
+		// PO_RegisterView.checkKey(driver, "Error.login.email.empty",
+		// PO_Properties.getSPANISH());
+		// PO_RegisterView.checkKey(driver, "Error.login.password.empty",
+		// PO_Properties.getSPANISH());
+		// PO_RegisterView.checkKey(driver, "Error.login.email.notExist",
+		// PO_Properties.getSPANISH());
+	}
+
+	// Prueba 8 inicio de sesion con datos invalidos
+	// Contraseña incorrecta
+	@Test
+	public void Prueba8() {
+		// Vamos al formulario de loggin
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "444444");
+		PO_View.getP();
+		// Comprobamos que devuelve error por contraseña invalida
+		// PO_RegisterView.checkKey(driver, "Error.login.password.notMatch",
+		// PO_Properties.getSPANISH());
+
+	}
+	
+	// Prueba 9 Desconexion
+		// Contraseña incorrecta
 		@Test
-		public void Prueba7() {
+		public void Prueba9() {
 			// Vamos al formulario de loggin
 			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 			// Rellenamos el formulario con un usuario standar
-			PO_LoginView.fillForm(driver, "", "");
+			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
 			PO_View.getP();
-			//En caso de que se dejen vacios devuelve los mensajes de error respectivos
-			//PO_RegisterView.checkKey(driver, "Error.login.email.empty", PO_Properties.getSPANISH());
-			//PO_RegisterView.checkKey(driver, "Error.login.password.empty", PO_Properties.getSPANISH());
-			//PO_RegisterView.checkKey(driver, "Error.login.email.notExist", PO_Properties.getSPANISH());
-		}
-		
-		// Prueba 8 inicio de sesion con datos invalidos
-		//Contraseña incorrecta
-				@Test
-				public void Prueba8() {
-					// Vamos al formulario de loggin
-					PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-					// Rellenamos el formulario con un usuario standar
-					PO_LoginView.fillForm(driver, "pedrod@gmail.com", "444444");
-					PO_View.getP();
-					// Comprobamos que devuelve error por contraseña invalida
-					//PO_RegisterView.checkKey(driver, "Error.login.password.notMatch", PO_Properties.getSPANISH());
+			PO_HomeView.clickOption(driver, "/logout", "class", "btn btn-primary");
+			PO_HomeView.checkElement(driver, "text", "Identificate");
+			// Comprobamos que devuelve error por contraseña invalida
+			// PO_RegisterView.checkKey(driver, "Error.login.password.notMatch",
+			// PO_Properties.getSPANISH());
 
-				}
+		}
 
 	// Al finalizar la última prueba
 	@AfterClass
