@@ -50,4 +50,22 @@ public class PO_NavView extends PO_View {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", textLanguage, getTimeout());
 		elementos.get(0).click();
 	}
+	
+	/**
+	 * Navega a traves de las opciones de la barra de navegacion
+	 * seleccionando el menu y la opcion correspondiendtes.
+	 * @param driver
+	 * @param menu
+	 * @param option
+	 */
+	public static void checkNavMode(WebDriver driver, String menu, String option) {
+		// clickamos la opción Idioma.
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", menu, getTimeout());
+		elementos.get(0).click();
+		// Esperamos a que aparezca el menú de opciones.
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", option, getTimeout());
+		// SeleniumUtils.esperarSegundos(driver, 2);
+
+		elementos.get(0).click();
+	}
 }
