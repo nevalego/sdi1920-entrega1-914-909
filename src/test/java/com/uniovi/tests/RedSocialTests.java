@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
+import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
@@ -122,11 +123,22 @@ public class RedSocialTests {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		// Rellenamos el formulario.
 		// Caso 1:
-		PO_RegisterView.fillForm(driver, "jose@hotmail.com", "Josefo", "Perez", "123", "123");
+		PO_RegisterView.fillForm(driver, "pedrod@gmail.com", "Pedro", "Perez", "123", "123");
 		PO_View.getP();
 		// COmprobamos el error de email repetido repetido.
 		PO_RegisterView.checkKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH());
 
+	}
+	
+	//Prueba 5 inicio de sesion como admin
+	@Test
+	public void Prueba5() {
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		// Caso 1:
+		PO_LoginView.fillForm(driver, "ednu@gmail.com", "123456");
+		PO_View.getP();
 	}
 
 	// Al finalizar la última prueba
