@@ -11,10 +11,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
+import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
-import com.uniovi.tests.util.SeleniumUtils;
 
 // Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -28,12 +28,12 @@ public class RedSocialTests {
 	// y desactivar las actualizacioens automáticas):
 	
 	// Rutas Miguel
-	// static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-	// static String Geckdriver024 = "D:\\Universidad\\SDI\\Pruebas Selenium\\geckodriver024win64.exe";
+	 static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+	 static String Geckdriver024 = "D:\\Universidad\\SDI\\Pruebas Selenium\\geckodriver024win64.exe";
 	
 	// Rutas Nerea
-	static String PathFirefox65 = "/Archivos de programa/Mozilla Firefox/firefox.exe";
-	static String Geckdriver024 = "/Users/nerea/Documents/2 SEMESTRE/SDI/5. Web testing con Selenium/PL-SDI-Sesión5-material/PL-SDI-Sesión5-material/geckodriver024win64.exe";
+	//static String PathFirefox65 = "/Archivos de programa/Mozilla Firefox/firefox.exe";
+	//static String Geckdriver024 = "/Users/nerea/Documents/2 SEMESTRE/SDI/5. Web testing con Selenium/PL-SDI-Sesión5-material/PL-SDI-Sesión5-material/geckodriver024win64.exe";
 	
 	// Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
@@ -68,42 +68,77 @@ public class RedSocialTests {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
 		// Rellenamos el formulario
-		PO_RegisterView.fillForm(driver, "jose@hotmail.com", "Josefo", "Perez", "123", "123");
+		PO_RegisterView.fillForm(driver, "prueba@hotmail.com", "Prueba", "Prueba", "123", "123");
 		// Comprobamos que entramos en la sección privada
-		PO_View.checkElement(driver, "text", "jose@hotmail.com");
+		PO_View.checkElement(driver, "text", "prueba@hotmail.com");
 	}
 	
-	// Prueba2. Registro de Usuario con datos inválidos (email vacío, nombre vacío, apellidos vacíos).
-	@Test
-	public void Prueba2() {
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_RegisterView.fillForm(driver, "", "", "", "123", "123");
-		// Comprobamos el error de campo vacío
-		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getENGLISH());
-	}
+	// Prueba 2. Registro de Usuario con datos inválidos (email vacío, nombre vacío,
+		// apellidos vacíos).
+		@Test
+		public void Prueba2() {
+			// Vamos al formulario de registro
+			PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
+			// Rellenamos el formulario.
+			PO_RegisterView.fillForm(driver, "", "Josefo", "Perez", "123456", "123456");
+			PO_View.getP();
+			// COmprobamos el error de email vacio.
+			PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+			// Comprobamos el error de ultimo caracter alfabetico de DNI
+			// Rellenamos el formulario.
+			PO_RegisterView.fillForm(driver, "j@m", "", "", "", "");
+			// COmprobamos el error de Nombre corto .
+			PO_RegisterView.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
+			// Comprobamos el error de longitud de email
+			PO_RegisterView.checkKey(driver, "Error.signup.email.length", PO_Properties.getSPANISH());
+			// COmprobamos el error de Apellido corto .
+			PO_RegisterView.checkKey(driver, "Error.signup.lastName.length", PO_Properties.getSPANISH());
+			// COmprobamos el error de longitud de contraseña .
+			PO_RegisterView.checkKey(driver, "Error.signup.password.length", PO_Properties.getSPANISH());
+			
 
-	// Prueba3. Registro de Usuario con datos inválidos (repetición de contraseña inválida).
+		}
+
 	@Test
 	public void Prueba3() {
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_RegisterView.fillForm(driver, "jose@hotmail.com", "Josefo", "Perez", "123", "123");
-		// Comprobamos que entramos en la sección privada
-		PO_View.checkElement(driver, "text", "jose@hotmail.com");
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		// Caso 1:
+		PO_RegisterView.fillForm(driver, "josefo2@correo.com", "Josefo", "Perez", "77777", "66666");
+		PO_View.getP();
+		// COmprobamos el error de DNI repetido.
+		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
+		
+
+		// Caso 2:
+		PO_RegisterView.fillForm(driver, "josefo2@correo.com", "Jose", "Perez", "1", "1");
+		// COmprobamos el error de Nombre corto .
+		PO_RegisterView.checkKey(driver, "Error.signup.password.length", PO_Properties.getSPANISH());
 	}
 	
-	//Prueba4. Registro de Usuario con datos inválidos (email existente).
 	@Test
 	public void Prueba4() {
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_RegisterView.fillForm(driver, "jose@hotmail.com", "Josefo", "Perez", "123", "123");
-		// Comprobamos que entramos en la sección privada
-		PO_View.checkElement(driver, "text", "jose@hotmail.com");
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		// Caso 1:
+		PO_RegisterView.fillForm(driver, "pedrod@gmail.com", "Pedro", "Perez", "123", "123");
+		PO_View.getP();
+		// COmprobamos el error de email repetido repetido.
+		PO_RegisterView.checkKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH());
+
+	}
+	
+	//Prueba 5 inicio de sesion como admin
+	@Test
+	public void Prueba5() {
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		// Caso 1:
+		PO_LoginView.fillForm(driver, "ednu@gmail.com", "123456");
+		PO_View.getP();
 	}
 
 	// Al finalizar la última prueba
