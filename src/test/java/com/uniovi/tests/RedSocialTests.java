@@ -72,8 +72,39 @@ public class RedSocialTests {
 		// Comprobamos que entramos en la sección privada
 		PO_View.checkElement(driver, "text", "jose@hotmail.com");
 	}
-
 	
+	// Prueba2. Registro de Usuario con datos inválidos (email vacío, nombre vacío, apellidos vacíos).
+	@Test
+	public void Prueba2() {
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_RegisterView.fillForm(driver, "", "", "", "123", "123");
+		// Comprobamos el error de campo vacío
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getENGLISH());
+	}
+
+	// Prueba3. Registro de Usuario con datos inválidos (repetición de contraseña inválida).
+	@Test
+	public void Prueba3() {
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_RegisterView.fillForm(driver, "jose@hotmail.com", "Josefo", "Perez", "123", "123");
+		// Comprobamos que entramos en la sección privada
+		PO_View.checkElement(driver, "text", "jose@hotmail.com");
+	}
+	
+	//Prueba4. Registro de Usuario con datos inválidos (email existente).
+	@Test
+	public void Prueba4() {
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "/signup", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_RegisterView.fillForm(driver, "jose@hotmail.com", "Josefo", "Perez", "123", "123");
+		// Comprobamos que entramos en la sección privada
+		PO_View.checkElement(driver, "text", "jose@hotmail.com");
+	}
 
 	// Al finalizar la última prueba
 	@AfterClass
