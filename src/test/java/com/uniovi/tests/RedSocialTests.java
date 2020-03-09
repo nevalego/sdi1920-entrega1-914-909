@@ -164,6 +164,35 @@ public class RedSocialTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
 
 	}
+	
+	// Prueba 7 inicio de sesion con datos invalidos
+	//Campos Vacios
+		@Test
+		public void Prueba7() {
+			// Vamos al formulario de loggin
+			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+			// Rellenamos el formulario con un usuario standar
+			PO_LoginView.fillForm(driver, "", "");
+			PO_View.getP();
+			//En caso de que se dejen vacios devuelve los mensajes de error respectivos
+			//PO_RegisterView.checkKey(driver, "Error.login.email.empty", PO_Properties.getSPANISH());
+			//PO_RegisterView.checkKey(driver, "Error.login.password.empty", PO_Properties.getSPANISH());
+			//PO_RegisterView.checkKey(driver, "Error.login.email.notExist", PO_Properties.getSPANISH());
+		}
+		
+		// Prueba 8 inicio de sesion con datos invalidos
+		//Contraseña incorrecta
+				@Test
+				public void Prueba8() {
+					// Vamos al formulario de loggin
+					PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+					// Rellenamos el formulario con un usuario standar
+					PO_LoginView.fillForm(driver, "pedrod@gmail.com", "444444");
+					PO_View.getP();
+					// Comprobamos que devuelve error por contraseña invalida
+					//PO_RegisterView.checkKey(driver, "Error.login.password.notMatch", PO_Properties.getSPANISH());
+
+				}
 
 	// Al finalizar la última prueba
 	@AfterClass
