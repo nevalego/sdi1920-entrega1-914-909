@@ -1,5 +1,8 @@
 package com.uniovi.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -70,7 +73,14 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("usersList", usersService.getUsersForUser(activeUser));
+		List<User> users = new ArrayList<User>();
+		if( activeUser.getRole().equals(rolesService.getRoles()[1])) {
+			// Si es Admin devuelve todos los usuarios del sistema
+			users = usersService.getUsers();
+		} else {
+			users = usersService.getUsersForUser(activeUser);
+		}
+		model.addAttribute("usersList", users);
 		return "user/list";
 	}
 

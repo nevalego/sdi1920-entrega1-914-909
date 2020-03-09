@@ -42,7 +42,7 @@ public class UsersService {
 		return usersRepository.findByEmail(email);
 	}
 
-	public Object getUsersForUser(User activeUser) {
+	public List<User> getUsersForUser(User activeUser) {
 		return usersRepository.findAllForUser(activeUser);
 	}
 }
