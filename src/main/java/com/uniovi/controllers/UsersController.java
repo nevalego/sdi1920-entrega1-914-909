@@ -64,11 +64,33 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model, Pageable pageable, String searchText) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("publicationList", activeUser.getPublications());
+		List<User> users = new ArrayList<User>();
+		
+		if( activeUser.getRole().equals(rolesService.getRoles()[1])) {
+			// Si es Admin devuelve todos los usuarios del sistema
+			if( searchText != null && !searchText.isEmpty() ) {
+				users = usersService.searchUserByNameLastNameAndEmail(searchText);
+			} else {
+				users = usersService.getUsers();
+			}
+			model.addAttribute("usersList", users);
+			
+		} else {
+			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
+			
+			if( searchText != null && !searchText.isEmpty() ) {
+				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable,searchText);
+			} else {
+				usersPageable = usersService.getUsersForUser(pageable, activeUser);
+			}
+			users = usersPageable.getContent();
+			model.addAttribute("usersList", users);
+			model.addAttribute("page", usersPageable);
+		}
 		return "home";
 	}
 

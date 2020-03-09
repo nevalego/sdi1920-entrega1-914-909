@@ -15,7 +15,7 @@ public class SeleniumUtils {
 
 	
 	/**
-	 * Aborta si el "texto" no está presente en la página actual
+	 * Comprueba si el "texto está presente en la página actual
 	 * @param driver: apuntando al navegador abierto actualmente.
 	 * @param texto: texto a buscar
 	 */
