@@ -85,4 +85,11 @@ public class Publication {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "Publication [id=" + id + ", text=" + text + ", title=" + title + ", date=" + date + ", user=" + user
+				+ "]";
+	}
+
+	
 }

@@ -29,6 +29,7 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Publication> publications;
 
+	
 	public User(String email, String name, String lastName) {
 		super();
 		this.email = email;

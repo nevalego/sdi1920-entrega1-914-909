@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2>Invitaciones de Amistad</h2>
+		<p>Los usuarios que actualmente te han ralizado una invitación de amistad:</p>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Email</th>
+						<th>Nombre</th>
+						<th>Apellidos</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${invitationsList}">
+						<td th:text="${invitation.userRequesting.email}">email@email.com</td>
+						<td th:text="${invitation.userRequesting.name}">Nombre del usuario</td>
+						<td th:text="${invitation.userRequesting.lastName}">Apellidos del usuario</a></td>
+						<td><a sec:authorize="hasRole('ROLE_STANDARD')" th:href="${'/invitation/accept/' + invitation.id}">Aceptar</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<footer th:replace="fragments/footer" />
+
+</body>
+</html>
+
+

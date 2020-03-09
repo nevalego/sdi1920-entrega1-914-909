@@ -18,9 +18,6 @@
 						<th>Apellidos</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -28,7 +25,8 @@
 						<td th:text="${user.email}">email@email.com</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.lastName}">Apellidos del usuario</a></td>
-						<td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/user/delete/' + user.id}">eliminar</a></td>
+						<td><a sec:authorize="hasRole('ROLE_STANDARD')" th:href="${'/invitation/add/' + user.id}">Agregar amigo</a></td>
+						<td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/user/delete/' + user.id}">Eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
