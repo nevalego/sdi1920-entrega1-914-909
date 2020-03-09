@@ -10,6 +10,13 @@
 		<h2>Usuarios</h2>
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
+		<form class="navbar-form" action="/user/list">
+			<div class="form-group">
+				<input name="searchText" type="text" class="form-control" size="50"
+					placeholder="Buscar por nombre, apellidos o email del usuario">
+			</div>
+			<button type="submit" class="btn btn-default">Buscar</button>
+		</form>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>

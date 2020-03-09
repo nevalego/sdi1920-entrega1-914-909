@@ -73,18 +73,24 @@ public class UsersController {
 	}
 
 	@RequestMapping("/user/list")
-	public String getListado(Model model, Pageable pageable) {
+	public String getListado(Model model, Pageable pageable, String searchText) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		List<User> users = new ArrayList<User>();
+		
 		if( activeUser.getRole().equals(rolesService.getRoles()[1])) {
 			// Si es Admin devuelve todos los usuarios del sistema
 			users = usersService.getUsers();
 			model.addAttribute("usersList", users);
 		} else {
 			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
-			usersPageable = usersService.getUsersForUser(pageable, activeUser);
+			
+			if( searchText != null && !searchText.isEmpty() ) {
+				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable,searchText);
+			} else {
+				usersPageable = usersService.getUsersForUser(pageable, activeUser);
+			}
 			users = usersPageable.getContent();
 			model.addAttribute("usersList", users);
 			model.addAttribute("page", usersPageable);
