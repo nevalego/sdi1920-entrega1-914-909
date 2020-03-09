@@ -12,6 +12,14 @@ public class PO_HomeView extends PO_NavView {
 				"welcome.message", language), getTimeout()); 
 		}
 	
+	static public void checkIdentification(WebDriver driver, int language) {   
+		//Esperamos a que se cargue el saludo de bienvenida en Español   
+		SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString(
+				"login.message", language), getTimeout());
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, p.getString(
+				"logout.message", language),getTimeout());
+		}
+	
 	static public void checkChangeIdiom(WebDriver driver, String textIdiom1, 
 			String textIdiom2, int locale1, int locale2 ) {    
 		//Esperamos a que se cargue el saludo de bienvenida en Español    
@@ -25,4 +33,6 @@ public class PO_HomeView extends PO_NavView {
 		//Esperamos a que se cargue el saludo de bienvenida en Español    
 		PO_HomeView.checkWelcome(driver, locale1); 
 	 }
+	
+	
 }

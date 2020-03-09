@@ -197,23 +197,25 @@ public class RedSocialTests {
 		// PO_Properties.getSPANISH());
 
 	}
-	
-	// Prueba 9 Desconexion
-		// Contraseña incorrecta
-		@Test
-		public void Prueba9() {
-			// Vamos al formulario de loggin
-			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-			// Rellenamos el formulario con un usuario standar
-			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-			PO_View.getP();
-			PO_HomeView.clickOption(driver, "/logout", "class", "btn btn-primary");
-			PO_HomeView.checkElement(driver, "text", "Identificate");
-			// Comprobamos que devuelve error por contraseña invalida
-			// PO_RegisterView.checkKey(driver, "Error.login.password.notMatch",
-			// PO_Properties.getSPANISH());
 
-		}
+	// Prueba 9 Desconexion
+	@Test
+	public void Prueba9() {
+		// Vamos al formulario de loggin
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+		PO_HomeView.clickOption(driver, "/logout", "class", "btn btn-primary");
+		PO_HomeView.checkElement(driver, "text", "Identificate");
+
+	}
+
+	// Prueba 10 Boton desconexion no visible si no se esta loggeado
+	@Test
+	public void Prueba10() {
+		PO_HomeView.checkIdentification(driver, PO_Properties.getSPANISH());
+	}
 
 	// Al finalizar la última prueba
 	@AfterClass
