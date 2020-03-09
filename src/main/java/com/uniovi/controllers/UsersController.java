@@ -1,9 +1,13 @@
 package com.uniovi.controllers;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -69,7 +73,7 @@ public class UsersController {
 	}
 
 	@RequestMapping("/user/list")
-	public String getListado(Model model) {
+	public String getListado(Model model, Pageable pageable) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
@@ -77,10 +81,14 @@ public class UsersController {
 		if( activeUser.getRole().equals(rolesService.getRoles()[1])) {
 			// Si es Admin devuelve todos los usuarios del sistema
 			users = usersService.getUsers();
+			model.addAttribute("usersList", users);
 		} else {
-			users = usersService.getUsersForUser(activeUser);
+			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
+			usersPageable = usersService.getUsersForUser(pageable, activeUser);
+			users = usersPageable.getContent();
+			model.addAttribute("usersList", users);
+			model.addAttribute("page", usersPageable);
 		}
-		model.addAttribute("usersList", users);
 		return "user/list";
 	}
 
