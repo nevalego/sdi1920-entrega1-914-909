@@ -288,7 +288,7 @@ public class RedSocialTests {
 					//El admin tampoco debe ser visible
 					SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
 					
-					//Comprobamos que los demas usuarios aparecen todos
+					//Comprobamos que los demas usuarios tampoco aparecen
 					SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
 					SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
 					SeleniumUtils.textoNoPresentePagina(driver, "maral@gmail.com");
@@ -296,6 +296,35 @@ public class RedSocialTests {
 					
 				}
 
+				// Prueba 14 Realizar busqueda especifica y aparecen los usuarios concretos
+				@Test
+				public void Prueba14() {
+					PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+					// Rellenamos el formulario con un usuario standar
+					PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+					PO_View.getP();
+					
+					//Nos dirigimos a la lista de usuarios
+					PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+					
+					//Realizamos la busqueda con campos vacios
+					PO_UserListView.makeASearch(driver, "Mar");
+					
+					//Comprobamos que el usuario loggeado no esta presente
+					SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
+					//El admin tampoco debe ser visible
+					SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
+					
+					
+					//Comprobamos que los usuarios que corresponden aparecen
+					
+					SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+					SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
+					
+					//Comprobamos que no aparecen usuarios que no corresponden
+					SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
+					SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
+				}
 	// Al finalizar la última prueba
 	@AfterClass
 	static public void end() {
