@@ -10,8 +10,8 @@ import com.uniovi.entities.User;
 
 public interface InvitationsRepository extends CrudRepository<Invitation, Long>{
 
-	@Query("SELECT i FROM Invitation i WHERE i.user_responding = ?1")
+	@Query("SELECT i FROM Invitation i WHERE i.userResponding = ?1")
 	List<Invitation> findAllForUser(User user);
 
-	
 }
+

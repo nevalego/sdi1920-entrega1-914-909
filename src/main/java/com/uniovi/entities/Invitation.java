@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Invitation {
@@ -12,8 +13,12 @@ public class Invitation {
 	@GeneratedValue
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "user_requesting_id")
 	private User userRequesting;
 	
+	@ManyToOne
+	@JoinColumn(name = "user_responding_id")
 	private User userResponding;
 
 	public Invitation(Long id, User userRequesting, User userResponding) {

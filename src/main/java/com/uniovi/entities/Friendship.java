@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Friendship {
@@ -12,8 +13,12 @@ public class Friendship {
 	@GeneratedValue
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "user1_id")
 	private User user1;
 	
+	@ManyToOne
+	@JoinColumn(name = "user2_id")
 	private User user2;
 
 	public Friendship(Long id, User user1, User user2) {
@@ -54,6 +59,8 @@ public class Friendship {
 	public void setUser2(User user2) {
 		this.user2 = user2;
 	}
+	
+	
 
 	@Override
 	public String toString() {

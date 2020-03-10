@@ -28,7 +28,12 @@ public class User {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Publication> publications;
-
+	
+	@OneToMany(mappedBy = "user1", cascade = CascadeType.ALL)
+	private Set<Friendship> friends;
+	
+	@OneToMany(mappedBy = "userResponding",  cascade = CascadeType.ALL)
+	private Set<Invitation> invitations;
 	
 	public User(String email, String name, String lastName) {
 		super();
@@ -101,6 +106,24 @@ public class User {
 
 	public void setPublications(Set<Publication> publications) {
 		this.publications=publications;
+	}
+
+	
+	
+	public Set<Invitation> getInvitations() {
+		return invitations;
+	}
+
+	public void setInvitations(Set<Invitation> invitations) {
+		this.invitations = invitations;
+	}
+
+	public Set<Friendship> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<Friendship> friends) {
+		this.friends = friends;
 	}
 
 	@Override

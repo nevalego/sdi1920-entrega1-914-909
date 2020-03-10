@@ -19,6 +19,12 @@
 //
 //	@Autowired
 //	private RolesService rolesService;
+//	
+//	@Autowired
+//	private FriendshipService friendshipService;
+//	
+//	@Autowired
+//	private InvitationService invitationsService;
 //
 //	@PostConstruct
 //	public void init() {
@@ -69,5 +75,12 @@
 //		usersService.addUser(user4);
 //		usersService.addUser(user5);
 //		usersService.addUser(user6);
+//		
+//		invitationsService.addInvitationFromTo(user1, user2);
+//		invitationsService.addInvitationFromTo(user6, user1);
+//		invitationsService.addInvitationFromTo(user4, user6);
+//		
+//		friendshipService.addFriendship(user1, user4);
+//		friendshipService.addFriendship(user1, user5);
 //	}
 //}
