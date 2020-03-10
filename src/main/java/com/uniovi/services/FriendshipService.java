@@ -1,5 +1,7 @@
 package com.uniovi.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class FriendshipService {
 	public void addFriendship(User user1, User user2) {
 		Friendship friendship = new Friendship(user1,user2);
 		friendshipRepository.save(friendship);
+	}
+
+	public List<Friendship> getFriendsOfUser(User user1) {
+		return friendshipRepository.findAllOfUser(user1);
 	}
 
 }

@@ -44,7 +44,11 @@ public class InvitationController {
 		String email = auth.getName();
 		User userRequesting = usersService.getUserByEmail(email);
 		User userResponding = usersService.getUser(id);
-		invitationsService.addInvitationFromTo(userRequesting, userResponding);
+		
+		Invitation invitation = invitationsService.getInvitationFromTo(userRequesting, userResponding);
+		if( invitation != null )
+			invitationsService.addInvitationFromTo(userRequesting, userResponding);
+		
 		return "user/list";
 	}
 

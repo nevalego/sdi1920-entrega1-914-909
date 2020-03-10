@@ -30,6 +30,10 @@ public class InvitationService {
 		invitationsRepository.deleteById(id);
 	}
 	
+	public Invitation getInvitationFromTo(User userRequesting, User userResponding) {
+		return invitationsRepository.findByUsers(userRequesting,userResponding);
+	}
+	
 	public void addInvitationFromTo(User userRequesting, User userResponding) {
 		Invitation invitation = new Invitation(userRequesting,userResponding);
 		invitationsRepository.save(invitation);

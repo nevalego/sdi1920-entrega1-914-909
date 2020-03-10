@@ -45,6 +45,16 @@ public class User {
 	public User() {
 	}
 
+	public boolean isFriendOf(User user2) {
+		boolean isFriend = false;
+		for(Friendship friendship : friends) {
+			if(friendship.getUser2().getId() == user2.getId()) {
+				isFriend = true;
+			}
+		}
+		return isFriend;
+	}
+	
 	public String getRole() {
 		return role;
 	}
