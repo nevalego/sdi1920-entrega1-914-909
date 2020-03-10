@@ -268,6 +268,33 @@ public class RedSocialTests {
 			SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
 			
 		}
+		
+		// Prueba 13 Realizar busqueda con terminos no existentes
+				@Test
+				public void Prueba13() {
+					PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+					// Rellenamos el formulario con un usuario standar
+					PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+					PO_View.getP();
+					
+					//Nos dirigimos a la lista de usuarios
+					PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+					
+					//Realizamos la busqueda con campos vacios
+					PO_UserListView.makeASearch(driver, "Politico honrado");
+					
+					//Comprobamos que el usuario loggeado no esta presente
+					SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
+					//El admin tampoco debe ser visible
+					SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
+					
+					//Comprobamos que los demas usuarios aparecen todos
+					SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
+					SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
+					SeleniumUtils.textoNoPresentePagina(driver, "maral@gmail.com");
+					SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
+					
+				}
 
 	// Al finalizar la última prueba
 	@AfterClass
