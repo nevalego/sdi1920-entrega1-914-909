@@ -11,31 +11,31 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-				<li><a href="/">Home</a></li>
+				<li><a href="/" th:text="#{nav.option.home}">Home</a></li>
 				<li id="publications-menu" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown"
-						href="#">Gestión de publicaciones <span class="caret"></span>
+						href="#" th:text="#{nav.option.publications}" >Gestión de publicaciones <span class="caret"></span>
 					</a>	
 					<ul class="dropdown-menu">
-						<li><a href="/publication/add">Agregar Publicación</a></li>
-						<li><a href="/publication/list">Ver Mis Publicaciones</a></li>
+						<li><a href="/publication/add" th:text="#{nav.option.publications.add}">Agregar Publicación</a></li>
+						<li><a href="/publication/list" th:text="#{nav.option.publications.list}">Ver Mis Publicaciones</a></li>
 					</ul>
 				</li>
 				<li id="users-menu" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown"
-						href="#">Gestión de Usuarios <span class="caret"></span> 
+						href="#" th:text="#{nav.option.users}">Gestión de Usuarios <span class="caret"></span> 
 					</a>
 					<ul class="dropdown-menu">
-						<li><a id="btnListUsers" href="/user/list">Ver Usuarios</a></li>
+						<li><a id="btnListUsers" href="/user/list" th:text="#{nav.option.users.list}">Ver Usuarios</a></li>
 					</ul>
 				</li>
 				<li id="friends-menu" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown"
-						href="#">Gestión de Amigos <span class="caret"></span> 
+						href="#" th:text="#{nav.option.friends}">Gestión de Amigos <span class="caret"></span> 
 					</a>
 					<ul class="dropdown-menu">
-						<li><a id="btnListInvitations" href="/invitation/list">Ver Invitaciones</a></li>
-						<li><a id="btnListFriends" href="/friendship/list">Ver Mis Amigos</a></li>
+						<li><a id="btnListInvitations" href="/invitation/list" th:text="#{nav.option.friends.invitations}">Ver Invitaciones</a></li>
+						<li><a id="btnListFriends" href="/friendship/list" th:text="#{nav.option.friends.list}">Ver Mis Amigos</a></li>
 					</ul>
 				</li>
 			</ul>
