@@ -21,7 +21,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${invitationsList}">
+					<tr th:each="invitation : ${invitationsList}">
 						<td th:text="${invitation.userRequesting.email}">email@email.com</td>
 						<td th:text="${invitation.userRequesting.name}">Nombre del usuario</td>
 						<td th:text="${invitation.userRequesting.lastName}">Apellidos del usuario</a></td>
