@@ -7,10 +7,10 @@
 <nav th:replace="fragments/nav"/> 
 
 <div class="container">
-  <h2>Agregar Publicación</h2>
+  <h2 th:text="#{publication.title}">Agregar Publicación</h2>
   <form class="form-horizontal" method="post" action="/publication/add">
     <div class="form-group">
-    	<label class="control-label col-sm-2" for="user">Usuario:</label>
+    	<label class="control-label col-sm-2" for="user" th:text="#{publication.info.user}">Usuario:</label>
     	<div class="col-sm-10" th:if="${usersList != null and not #lists.isEmpty(usersList)}">
     		<select id="user" class="form-control" name="user">
     			<option th:each="user : ${usersList}"
@@ -22,26 +22,26 @@
     	</div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="title">Titulo:</label>
+      <label class="control-label col-sm-2" for="title" th:text="#{publication.info.title}">Titulo:</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" name="title" placeholder="Titulo" required="true" />
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="text">Texto:</label>
+      <label class="control-label col-sm-2" for="text" th:text="#{publication.info.text}">Texto:</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" name="text" placeholder="Texto" required="true" />
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Fecha:</label>
+      <label class="control-label col-sm-2" for="pwd" th:text="#{publication.info.Date}">Fecha:</label>
       <div class="col-sm-10">          
         <input type="date" class="form-control" name="date" placeholder="10-11-2020" required="true" />
       </div>
     </div>
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary" th:text="#{users.send}">Enviar</button>
       </div>
     </div>
   </form>

@@ -9,25 +9,25 @@
 <div class="container">
   <h2>Detalles de la publicacion</h2>      
   <div class="panel panel-default">
-	  <div class="panel-heading">Email</div>
+	  <div class="panel-heading" th:text="#{users.email}">Email</div>
 	  <div class="panel-body" th:text="${publication.user.email}" >
 		email@email.com
 	  </div>
   </div>   
   <div class="panel panel-default">
-	  <div class="panel-heading">Titulo</div>
+	  <div class="panel-heading" th:text="#{publication.info.title}">Titulo</div>
 	  <div class="panel-body" th:text="${publication.title}" >
 		
 	  </div>
   </div>                                                                   
   <div class="panel panel-default">
-	  <div class="panel-heading">Texto</div>
+	  <div class="panel-heading" th:text="#{publication.info.text}">Texto</div>
 	  <div class="panel-body" th:text="${publication.text}" >
 		
 	  </div>
   </div>
   <div class="panel panel-default">
-	  <div class="panel-heading">Fecha</div>
+	  <div class="panel-heading" th:text="#{publication.info.date}">Fecha</div>
 	  <div class="panel-body" th:text="${publication.date}">
 		10-10-2020
 	  </div>

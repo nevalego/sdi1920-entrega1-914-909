@@ -7,15 +7,15 @@
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
-		<h2>Invitaciones de Amistad</h2>
-		<p>Los usuarios que actualmente te han ralizado una invitación de amistad:</p>
+		<h2 th:text="#{invitation.title}">Invitaciones de Amistad</h2>
+		<p th:text="#{invitation.message}">Los usuarios que actualmente te han ralizado una invitación de amistad:</p>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Email</th>
-						<th>Nombre</th>
-						<th>Apellidos</th>
+						<th th:text="#{users.email}">Email</th>
+						<th th:text="#{users.name}">Nombre</th>
+						<th th:text="#{users.surname}">Apellidos</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 					</tr>
