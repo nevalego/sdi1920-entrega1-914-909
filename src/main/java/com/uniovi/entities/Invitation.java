@@ -59,7 +59,7 @@ public class Invitation {
 	public void setUserResponding(User userResponding) {
 		this.userResponding = userResponding;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Invitation [id=" + id + ", userRequesting=" + userRequesting + ", userResponding=" + userResponding

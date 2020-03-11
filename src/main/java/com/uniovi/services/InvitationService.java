@@ -1,9 +1,11 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Invitation;
@@ -16,9 +18,9 @@ public class InvitationService {
 	@Autowired
 	private InvitationsRepository invitationsRepository;
 	
-	public List<Invitation> getInvitationsForUser(User user) {
-		List<Invitation> invitations = new ArrayList<Invitation>();
-		invitations = invitationsRepository.findAllForUser(user);
+	public Page<Invitation> getInvitationsForUser(Pageable pageable, User user) {
+		Page<Invitation> invitations = new PageImpl<Invitation>(new LinkedList<Invitation>());
+		invitations = invitationsRepository.findAllForUser(pageable, user);
 		return invitations;
 	}
 	

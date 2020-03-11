@@ -1,9 +1,13 @@
 package com.uniovi.controllers;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -53,13 +57,14 @@ public class InvitationController {
 	}
 
 	@RequestMapping(value="/invitation/list") 
-	public String getListado(Model model) {
+	public String getListado(Model model, Pageable pageable) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User userResponding = usersService.getUserByEmail(email);
-		List<Invitation> invitationsRecepted = new ArrayList<Invitation>();
-		invitationsRecepted = invitationsService.getInvitationsForUser(userResponding);
-		model.addAttribute("invitationsList", invitationsRecepted);
+		Page<Invitation> invitationsRecepted = new PageImpl<Invitation>(new LinkedList<Invitation>());
+		invitationsRecepted = invitationsService.getInvitationsForUser(pageable,userResponding);
+		model.addAttribute("invitationsList", invitationsRecepted.getContent());
+		model.addAttribute("page", invitationsRecepted);
 		return "invitation/list";
 	}
 	
