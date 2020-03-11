@@ -25,7 +25,7 @@
 						<td th:text="${invitation.userRequesting.email}">email@email.com</td>
 						<td th:text="${invitation.userRequesting.name}">Nombre del usuario</td>
 						<td th:text="${invitation.userRequesting.lastName}">Apellidos del usuario</a></td>
-						<td><a sec:authorize="hasRole('ROLE_STANDARD')" th:href="${'/invitation/accept/' + invitation.id}">Aceptar</a></td>
+						<td><a sec:authorize="hasRole('ROLE_STANDARD')"  th:text="#{invitation.accept}" th:href="${'/invitation/accept/' + invitation.id}">Aceptar</a></td>
 					</tr>
 				</tbody>
 			</table>

@@ -50,10 +50,11 @@ public class PO_NavView extends PO_View {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", textLanguage, getTimeout());
 		elementos.get(0).click();
 	}
-	
+
 	/**
-	 * Navega a traves de las opciones de la barra de navegacion
-	 * seleccionando el menu y la opcion correspondiendtes.
+	 * Navega a traves de las opciones de la barra de navegacion seleccionando el
+	 * menu y la opcion correspondiendtes.
+	 * 
 	 * @param driver
 	 * @param menu
 	 * @param option
@@ -68,4 +69,46 @@ public class PO_NavView extends PO_View {
 
 		elementos.get(0).click();
 	}
+
+	static public void checkNavText(WebDriver driver, int language) {
+		// Esperamos a que se cargue el menu home
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.home", language));
+		// Esperamos a que se cargue la opcion publicaciones
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.publications", language));
+
+		// Esperamos a que se cargue el menu publicaciones añadir
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.publications.add", language));
+		// Esperamos a que se cargue el menu publicaciones listar
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.publications.list", language));
+
+		// Esperamos a que se cargue el menu usuarios
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.users", language));
+		// Esperamos a que se cargue la opcion listar usuarios
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.users.list", language));
+
+		// Esperamos a que se cargue el menu amigos
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.friends", language));
+		// Esperamos a que se cargue la opcion listar invitaciones
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.friends.invitations", language));
+		// Esperamos a que se cargue la opcion listar amigos
+		SeleniumUtils.textoPresentePagina(driver, p.getString("nav.option.friends.list", language));
+
+		//Comprobamos el pie de pagina
+		SeleniumUtils.textoPresentePagina(driver, p.getString("footer.message", language));
+	}
+
+	static public void checkNavBarChangeIdiom(WebDriver driver, String textIdiom1, 
+			String textIdiom2, int locale1, int locale2 ) {    
+		//Esperamos a que se cargue el saludo de bienvenida en Español    
+		checkNavText(driver, locale1);    
+		//Cambiamos a segundo idioma    
+		changeIdiom(driver,  textIdiom2);    
+		//COmprobamos que el texto de bienvenida haya cambiado a segundo idioma    
+		checkNavText(driver, locale2);    
+		//Volvemos a Español.    
+		changeIdiom(driver, textIdiom1);    
+		//Esperamos a que se cargue el saludo de bienvenida en Español    
+		checkNavText(driver, locale1); 
+	 }
+	
 }

@@ -10,10 +10,12 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.uniovi.tests.pageobjects.PO_FriendsView;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_NavView;
 import com.uniovi.tests.pageobjects.PO_Properties;
+import com.uniovi.tests.pageobjects.PO_Publications;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_UserListView;
 import com.uniovi.tests.pageobjects.PO_View;
@@ -225,106 +227,150 @@ public class RedSocialTests {
 		// Rellenamos el formulario con un usuario standar
 		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
 		PO_View.getP();
-		
-		//Nos dirigimos a la lista de usuarios
+
+		// Nos dirigimos a la lista de usuarios
 		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-		
-		//Comprobamos que el usuario loggeado no esta presente
+
+		// Comprobamos que el usuario loggeado no esta presente
 		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
-		//El admin tampoco debe ser visible
+		// El admin tampoco debe ser visible
 		SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
-		
-		//Comprobamos que los demas usuarios aparecen todos
+
+		// Comprobamos que los demas usuarios aparecen todos
 		SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
 		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
 		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
 		SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
-		
-	}
-	
-	// Prueba 12 Realizar busqueda vacia y comprobar que salen todos los resultados
-		@Test
-		public void Prueba12() {
-			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-			// Rellenamos el formulario con un usuario standar
-			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-			PO_View.getP();
-			
-			//Nos dirigimos a la lista de usuarios
-			PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-			
-			//Realizamos la busqueda con campos vacios
-			PO_UserListView.makeASearch(driver, "");
-			
-			//Comprobamos que el usuario loggeado no esta presente
-			SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
-			//El admin tampoco debe ser visible
-			SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
-			
-			//Comprobamos que los demas usuarios aparecen todos
-			SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
-			SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
-			SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
-			SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
-			
-		}
-		
-		// Prueba 13 Realizar busqueda con terminos no existentes
-				@Test
-				public void Prueba13() {
-					PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-					// Rellenamos el formulario con un usuario standar
-					PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-					PO_View.getP();
-					
-					//Nos dirigimos a la lista de usuarios
-					PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-					
-					//Realizamos la busqueda con campos vacios
-					PO_UserListView.makeASearch(driver, "Politico honrado");
-					
-					//Comprobamos que el usuario loggeado no esta presente
-					SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
-					//El admin tampoco debe ser visible
-					SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
-					
-					//Comprobamos que los demas usuarios tampoco aparecen
-					SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
-					SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
-					SeleniumUtils.textoNoPresentePagina(driver, "maral@gmail.com");
-					SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
-					
-				}
 
-				// Prueba 14 Realizar busqueda especifica y aparecen los usuarios concretos
-				@Test
-				public void Prueba14() {
-					PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-					// Rellenamos el formulario con un usuario standar
-					PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-					PO_View.getP();
-					
-					//Nos dirigimos a la lista de usuarios
-					PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-					
-					//Realizamos la busqueda con campos vacios
-					PO_UserListView.makeASearch(driver, "Mar");
-					
-					//Comprobamos que el usuario loggeado no esta presente
-					SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
-					//El admin tampoco debe ser visible
-					SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
-					
-					
-					//Comprobamos que los usuarios que corresponden aparecen
-					
-					SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
-					SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
-					
-					//Comprobamos que no aparecen usuarios que no corresponden
-					SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
-					SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
-				}
+	}
+
+	// Prueba 12 Realizar busqueda vacia y comprobar que salen todos los resultados
+	@Test
+	public void Prueba12() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+
+		// Realizamos la busqueda con campos vacios
+		PO_UserListView.makeASearch(driver, "");
+
+		// Comprobamos que el usuario loggeado no esta presente
+		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
+		// El admin tampoco debe ser visible
+		SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
+
+		// Comprobamos que los demas usuarios aparecen todos
+		SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+
+	}
+
+	// Prueba 13 Realizar busqueda con terminos no existentes
+	@Test
+	public void Prueba13() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+
+		// Realizamos la busqueda con campos vacios
+		PO_UserListView.makeASearch(driver, "Politico honrado");
+
+		// Comprobamos que el usuario loggeado no esta presente
+		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
+		// El admin tampoco debe ser visible
+		SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
+
+		// Comprobamos que los demas usuarios tampoco aparecen
+		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "maral@gmail.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
+
+	}
+
+	// Prueba 14 Realizar busqueda especifica y aparecen los usuarios concretos
+	@Test
+	public void Prueba14() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+
+		// Realizamos la busqueda con campos vacios
+		PO_UserListView.makeASearch(driver, "Mar");
+
+		// Comprobamos que el usuario loggeado no esta presente
+		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
+		// El admin tampoco debe ser visible
+		SeleniumUtils.textoNoPresentePagina(driver, "admin@email.com");
+
+		// Comprobamos que los usuarios que corresponden aparecen
+
+		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
+
+		// Comprobamos que no aparecen usuarios que no corresponden
+		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
+	}
+
+	// Prueba 20 Realizar prueba de internacionalizacion en 4 páginas
+	@Test
+	public void Prueba20() {
+		// Comprobamos la página de inicio
+		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
+				PO_Properties.getENGLISH());
+
+		// Hacemos login para accerder a todas las funciones
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Hacemos comprobacion de las opciones de la barra de navegacion tienen la
+		// internacionalizacion correcta
+		PO_NavView.checkNavBarChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
+				PO_Properties.getENGLISH());
+
+		// Nos dirigimos a la Agregar Publicaciones
+		PO_NavView.checkNavMode(driver, "publications-menu", "btnAddPublication");
+
+		PO_Publications.checkAddPublicationChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
+				PO_Properties.getENGLISH());
+
+		// Nos dirigimos a la Listar Publicaciones
+		PO_NavView.checkNavMode(driver, "publications-menu", "btnListPublications");
+		PO_Publications.checkMyPublicationsListChangeIdiom(driver, "btnSpanish", "btnEnglish",
+				PO_Properties.getSPANISH(), PO_Properties.getENGLISH());
+
+		// Hacemos la comprobacion de la pantalla de Gestion de Usuarios Ver usuarios
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+		PO_UserListView.checkUserListChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
+				PO_Properties.getENGLISH());
+		
+		// Hacemos la comprobacion de la pantalla de Gestion de Usuarios Ver usuarios
+				// Nos dirigimos a la lista de usuarios
+				PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
+				PO_FriendsView.checkMyInvitationsListChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
+						PO_Properties.getENGLISH());
+
+
+	}
+
 	// Al finalizar la última prueba
 	@AfterClass
 	static public void end() {
