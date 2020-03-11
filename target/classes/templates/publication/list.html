@@ -35,7 +35,7 @@
 	    <td th:text="${publication.id}"> 1</td>
 	    <td th:text="${publication.title}"> Titulo</td>
 	    <td th:text="${publication.text}">Texto</td>
-	    <td th:text="${publication.date">Fecha</td>
+	    <td th:text="${publication.date}">Fecha</td>
 	    <td><a th:href="${'/publication/details/' + publication.id}" th:text="#{publications.info.details}">detalles</a></td>
 	    <td><a th:href="${'/publication/delete/' + publication.id}"  th:text="#{users.delete}">eliminar</a></td>
 	  </tr>

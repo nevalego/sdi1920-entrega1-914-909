@@ -68,12 +68,17 @@ public class InvitationController {
 		return "invitation/list";
 	}
 	
-	@RequestMapping(value="/invitation/accept/{id}", method = RequestMethod.POST)
-	public String acceptInvitation(@PathVariable Long invitationId) {
+	@RequestMapping(value="/invitation/accept/{invitationId}")
+	public String acceptInvitation(Model model,@PathVariable Long invitationId, Pageable pageable) {
 		
 		Invitation invitation = invitationsService.getById(invitationId);
 		friendshipService.addFriendship(invitation.getUserRequesting(), invitation.getUserResponding());
 		invitationsService.deleteInvitation(invitationId);
+		
+		Page<Invitation> invitationsRecepted = new PageImpl<Invitation>(new LinkedList<Invitation>());
+		invitationsRecepted = invitationsService.getInvitationsForUser(pageable,invitation.getUserResponding());
+		model.addAttribute("invitationsList", invitationsRecepted.getContent());
+		model.addAttribute("page", invitationsRecepted);
 		return "invitation/list";
 	}
 }
