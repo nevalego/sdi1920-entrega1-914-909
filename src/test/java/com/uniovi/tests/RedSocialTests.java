@@ -472,6 +472,25 @@ public class RedSocialTests {
 				PO_Properties.getENGLISH());
 
 	}
+	
+	
+	// Prueba 26, Comprobar que todas las publicaciones de un usuario aparecen
+			@Test
+			public void Prueba26() {
+				PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+				// Rellenamos el formulario con un usuario standar
+				PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+				PO_View.getP();
+
+				// Nos dirigimos a la lista de invitaciones	
+				PO_NavView.checkNavMode(driver, "publications-menu", "btnListPublications");
+				
+
+				// Comprobamos que aparecen los usuarios dichos
+				SeleniumUtils.textoPresentePagina(driver, "Buenos dias");
+				SeleniumUtils.textoPresentePagina(driver, "Me ha pasado algo genial");
+			}
+	
 
 	// Al finalizar la última prueba
 	@AfterClass
