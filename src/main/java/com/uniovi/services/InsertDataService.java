@@ -87,6 +87,7 @@
 //		
 //		invitationsService.addInvitationFromTo(user1, user2);
 //		invitationsService.addInvitationFromTo(user6, user1);
+//		invitationsService.addInvitationFromTo(user3, user1);
 //		invitationsService.addInvitationFromTo(user4, user6);
 //		invitationsService.addInvitationFromTo(user1, user7);
 //		

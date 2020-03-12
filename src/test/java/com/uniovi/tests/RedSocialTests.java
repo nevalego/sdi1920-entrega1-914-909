@@ -178,8 +178,7 @@ public class RedSocialTests {
 		PO_LoginView.fillForm(driver, "", "");
 		PO_View.getP();
 		// En caso de que se dejen vacios devuelve los mensajes de error respectivos
-		 PO_RegisterView.checkKey(driver, "Error.login",
-		 PO_Properties.getSPANISH());
+		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
 		// PO_RegisterView.checkKey(driver, "Error.login.password.empty",
 		// PO_Properties.getSPANISH());
 		// PO_RegisterView.checkKey(driver, "Error.login.email.notExist",
@@ -326,8 +325,8 @@ public class RedSocialTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
 	}
-	
-	// Prueba  15, enviar una invitacion a un usuario
+
+	// Prueba 15, enviar una invitacion a un usuario
 	@Test
 	public void Prueba15() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -337,68 +336,83 @@ public class RedSocialTests {
 
 		// Nos dirigimos a la lista de usuarios
 		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-		
-		//Mandamos una peticion de amistad
+
+		// Mandamos una peticion de amistad
 		PO_UserListView.addFriend(driver, "maral@gmail.com");
-		
-		//Salimos de sesion
+
+		// Salimos de sesion
 		PO_HomeView.clickOption(driver, "/logout", "class", "btn btn-primary");
-		
-		
+
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario del usuario al que enviamos la peticion
 		PO_LoginView.fillForm(driver, "maral@gmail.com", "123456");
-		
+
 		PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
 
 		// Comprobamos que el usuario que corresponde aparece
 		SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
 	}
-	
-	// Prueba  16, enviar una invitacion a un usuario al que ya se le envio una
+
+	// Prueba 16, enviar una invitacion a un usuario al que ya se le envio una
 	// invitacion
+	@Test
+	public void Prueba16() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+
+		// Mandamos una peticion de amistad
+		PO_UserListView.addFriend(driver, "lucasnu@gmail.com");
+
+		// Comprobamos que salta el mensaje de error
+		SeleniumUtils.textoPresentePagina(driver, "Ya existe una invitacion para este usuario");
+	}
+	
+	// Prueba 17, Comprobar que un usuario tiene mas de una invitacion de amistad
 		@Test
-		public void Prueba16() {
+		public void Prueba17() {
 			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 			// Rellenamos el formulario con un usuario standar
 			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
 			PO_View.getP();
 
-			// Nos dirigimos a la lista de usuarios
-			PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+			// Nos dirigimos a la lista de invitaciones	
+			PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
 			
-			//Mandamos una peticion de amistad
-			PO_UserListView.addFriend(driver, "lucasnu@gmail.com");
-			
+
 			// Comprobamos que salta el mensaje de error
-			SeleniumUtils.textoPresentePagina(driver, "Ya existe una invitacion para este usuario");
+			SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+			SeleniumUtils.textoPresentePagina(driver, "admin@email.com");
 		}
 	
-	
 
-	//Prueba 19 Mostrar listado de amigos de un usuario y que este completa
+	// Prueba 19 Mostrar listado de amigos de un usuario y que este completa
 	@Test
 	public void Prueba19() {
 		// Hacemos login para accerder a todas las funciones
-				PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-				// Rellenamos el formulario con un usuario standar
-				PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-				PO_View.getP();
-				
-				//Nos movemos a la opcion listar amigos
-				PO_NavView.checkNavMode(driver, "friends-menu", "btnListFriends");
-				
-				// Comprobamos que el usuario que corresponde aparece
-				SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
-				SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
-				
-				//Comprobamos que no aparece ninguno mas
-				SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
-				SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
-				SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos movemos a la opcion listar amigos
+		PO_NavView.checkNavMode(driver, "friends-menu", "btnListFriends");
+
+		// Comprobamos que el usuario que corresponde aparece
+		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+
+		// Comprobamos que no aparece ninguno mas
+		SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
 
 	}
-	
+
 	// Prueba 20 Realizar prueba de internacionalizacion en 4 páginas
 	@Test
 	public void Prueba20() {
@@ -433,13 +447,12 @@ public class RedSocialTests {
 		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
 		PO_UserListView.checkUserListChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
 				PO_Properties.getENGLISH());
-		
-		// Hacemos la comprobacion de la pantalla de Gestion de Usuarios Ver usuarios
-				// Nos dirigimos a la lista de usuarios
-				PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
-				PO_FriendsView.checkMyInvitationsListChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
-						PO_Properties.getENGLISH());
 
+		// Hacemos la comprobacion de la pantalla de Gestion de Usuarios Ver usuarios
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
+		PO_FriendsView.checkMyInvitationsListChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
+				PO_Properties.getENGLISH());
 
 	}
 
