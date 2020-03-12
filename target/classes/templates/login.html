@@ -7,6 +7,9 @@
 
 	<div class="container">
 		<h2  th:text="#{login.message}">Iniciar sesión</h2>
+		<div th:if="${error}" class="alert alert-danger">
+			<strong th:text="#{login.error}"></strong>
+		</div>
 		<form class="form-horizontal" method="post" action="/login">
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="username" th:text="#{users.email}">Email:</label>

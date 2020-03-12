@@ -42,18 +42,22 @@ public class InvitationController {
 	@Autowired 
 	private FriendshipService friendshipService;
 	
-	@RequestMapping(value ="/invitation/add/{id}", method = RequestMethod.POST)
-	public String inviteUserToFriendship(@PathVariable Long id) {
+	@RequestMapping(value ="/invitation/add/{id}")
+	public String inviteUserToFriendship(@PathVariable Long id, Pageable pageable, Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User userRequesting = usersService.getUserByEmail(email);
 		User userResponding = usersService.getUser(id);
 		
 		Invitation invitation = invitationsService.getInvitationFromTo(userRequesting, userResponding);
-		if( invitation != null )
+		if( invitation == null )
 			invitationsService.addInvitationFromTo(userRequesting, userResponding);
 		
-		return "user/list";
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		users = usersService.getUsersForUser(pageable,userResponding);
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "redirect:/user/list";
 	}
 
 	@RequestMapping(value="/invitation/list") 

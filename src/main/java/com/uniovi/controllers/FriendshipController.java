@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.uniovi.entities.Friendship;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendshipService;
 import com.uniovi.services.UsersService;
@@ -33,8 +32,9 @@ public class FriendshipController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User user1 = usersService.getUserByEmail(email);
-		Page<Friendship> friends = new PageImpl<Friendship>(new LinkedList<Friendship>());
+		Page<User> friends = new PageImpl<User>(new LinkedList<User>());
 		friends = friendshipService.getFriendsOfUser(pageable,user1);
+		model.addAttribute("userLogged", user1);
 		model.addAttribute("friendsList", friends.getContent());
 		model.addAttribute("page", friends);
 		return "friendship/list";

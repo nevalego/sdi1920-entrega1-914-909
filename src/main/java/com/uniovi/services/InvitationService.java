@@ -37,7 +37,8 @@ public class InvitationService {
 	}
 	
 	public void addInvitationFromTo(User userRequesting, User userResponding) {
+		
 		Invitation invitation = new Invitation(userRequesting,userResponding);
-		invitationsRepository.save(invitation);
+		Invitation invitationSaved =  invitationsRepository.save(invitation);
 	}
 }

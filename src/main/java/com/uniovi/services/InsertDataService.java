@@ -46,6 +46,13 @@
 //		User user6 = new User("admin@email.com", "Edward", "Núñez"); // ADMIN
 //		user6.setPassword("admin");
 //		user6.setRole(rolesService.getRoles()[1]);
+//		User user7 = new User("elendi@gmail.com", "Elena", "Ruiz");
+//		user7.setPassword("123456");
+//		user7.setRole(rolesService.getRoles()[0]);
+//
+//		User user8 = new User("llera@gmail.com", "Adrian", "Llera Lona");
+//		user8.setPassword("123456");
+//		user8.setRole(rolesService.getRoles()[0]);
 //
 //		Set<Publication> user1Publications = new HashSet<Publication>() {
 //			{
@@ -75,12 +82,17 @@
 //		usersService.addUser(user4);
 //		usersService.addUser(user5);
 //		usersService.addUser(user6);
+//		usersService.addUser(user7);
+// 		usersService.addUser(user8);
 //		
 //		invitationsService.addInvitationFromTo(user1, user2);
 //		invitationsService.addInvitationFromTo(user6, user1);
 //		invitationsService.addInvitationFromTo(user4, user6);
+//		invitationsService.addInvitationFromTo(user1, user7);
 //		
 //		friendshipService.addFriendship(user1, user4);
 //		friendshipService.addFriendship(user1, user5);
+//		friendshipService.addFriendship(user7, user2);
+//
 //	}
 //}
