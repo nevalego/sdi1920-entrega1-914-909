@@ -178,8 +178,8 @@ public class RedSocialTests {
 		PO_LoginView.fillForm(driver, "", "");
 		PO_View.getP();
 		// En caso de que se dejen vacios devuelve los mensajes de error respectivos
-		// PO_RegisterView.checkKey(driver, "Error.login.email.empty",
-		// PO_Properties.getSPANISH());
+		 PO_RegisterView.checkKey(driver, "Error.login",
+		 PO_Properties.getSPANISH());
 		// PO_RegisterView.checkKey(driver, "Error.login.password.empty",
 		// PO_Properties.getSPANISH());
 		// PO_RegisterView.checkKey(driver, "Error.login.email.notExist",
@@ -327,6 +327,32 @@ public class RedSocialTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
 	}
 
+	//Prueba 19 Mostrar listado de amigos de un usuario y que este completa
+	@Test
+	public void Prueba19() {
+		// Hacemos login para accerder a todas las funciones
+				PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+				// Rellenamos el formulario con un usuario standar
+				PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+				PO_View.getP();
+				
+				//Nos movemos a la opcion listar amigos
+				PO_NavView.checkNavMode(driver, "friends-menu", "btnListFriends");
+				
+				// Comprobamos que el usuario que corresponde aparece
+				SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
+				SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+				
+				//Comprobamos que no aparece ninguno mas
+				SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
+				SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
+				SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
+			
+				
+
+
+	}
+	
 	// Prueba 20 Realizar prueba de internacionalizacion en 4 páginas
 	@Test
 	public void Prueba20() {
