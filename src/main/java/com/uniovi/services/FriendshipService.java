@@ -46,4 +46,8 @@ public class FriendshipService {
 		return new PageImpl<User>(friends);
 	}
 
+	public Friendship getFriendship(User userRequesting, User userResponding) {
+		return friendshipRepository.findByUsers(userRequesting, userResponding);
+	}
+
 }

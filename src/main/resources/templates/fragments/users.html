@@ -1,36 +1,46 @@
 <div class="container">
-		<h2 th:text="#{users.title}">Usuarios</h2>
-		<p th:text="#{users.message}">Los usuarios que actualmente figuran en el sistema son los
-			siguientes:</p>
-		<form class="navbar-form" action="/user/list">
-			<div class="form-group">
-				<input id="searchText" name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por nombre, apellidos o email del usuario">
-			</div>
-			<button id= "btnSearch" type="submit" class="btn btn-default" th:text="#{users.search}">Buscar</button>
-		</form>
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th th:text="#{users.email}">Email</th>
-						<th th:text="#{users.name}">Nombre</th>
-						<th th:text="#{users.surname}">Apellidos</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="user : ${usersList}">
-						<td th:text="${user.email}">email@email.com</td>
-						<td th:text="${user.name}">Nombre del usuario</td>
-						<td th:text="${user.lastName}">Apellidos del usuario</a></td>
-						<td><a sec:authorize="hasRole('ROLE_STANDARD')" th:href="${'/invitation/add/' + user.id}" th:text="#{users.addFriend}">Agregar amigo</a></td>
-						<td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/user/delete/' + user.id}" th:text="#{users.delete}">Eliminar</a></td>
-					</tr>
-				</tbody>
-			</table>
+	<h2 th:text="#{users.title}">Usuarios</h2>
+	<p th:text="#{users.message}">Los usuarios que actualmente figuran
+		en el sistema son los siguientes:</p>
+	<form class="navbar-form" action="/user/list">
+		<div class="form-group">
+			<input id="searchText" name="searchText" type="text"
+				class="form-control" size="50"
+				placeholder="Buscar por nombre, apellidos o email del usuario">
 		</div>
-		<footer sec:authorize="!hasRole('ROLE_ADMIN')" 
-		th:replace="fragments/pagination" />
+		<button id="btnSearch" type="submit" class="btn btn-default"
+			th:text="#{users.search}">Buscar</button>
+	</form>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th th:text="#{users.email}">Email</th>
+					<th th:text="#{users.name}">Nombre</th>
+					<th th:text="#{users.surname}">Apellidos</th>
+					<th class="col-md-1"></th>
+					<th class="col-md-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<div
+						th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+						th:if="${mensaje != null}" th:text="${mensaje}" class="alert">
+					</div>
+				<tr th:each="user : ${usersList}">
+					<td th:text="${user.email}">email@email.com</td>
+					<td th:text="${user.name}">Nombre del usuario</td>
+					<td th:text="${user.lastName}">Apellidos del usuario</a></td>
+					<td><a sec:authorize="hasRole('ROLE_STANDARD')"
+						th:href="${'/invitation/add/' + user.id}"
+						th:text="#{users.addFriend}">Agregar amigo</a>
+					</td>
+					<td><a sec:authorize="hasRole('ROLE_ADMIN')"
+						th:href="${'/user/delete/' + user.id}" th:text="#{users.delete}">Eliminar</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+	<footer sec:authorize="!hasRole('ROLE_ADMIN')"
+		th:replace="fragments/pagination" />
+</div>
