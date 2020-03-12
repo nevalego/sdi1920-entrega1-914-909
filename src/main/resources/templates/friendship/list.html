@@ -22,6 +22,8 @@
 						<td th:text="${friend.email}">email@email.com</td>
 						<td th:text="${friend.name}">Nombre del usuario</td>
 						<td th:text="${friend.lastName}">Apellidos del usuario</a></td>
+						<td><a th:id="${'btnAceptInvitation' + user.email}" th:href="${'/invitation/accept/' + user.id}"
+						th:text="#{invitation.accept}">Aceptar peticion</a>
 					</tr>
 				</tbody>
 			</table>

@@ -1,11 +1,20 @@
 package com.uniovi.tests.pageobjects;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.uniovi.tests.util.SeleniumUtils;
 
 public class PO_FriendsView extends PO_NavView {
 
+	public static void aceptInvitation(WebDriver driver, String friendName) {
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "btnAceptInvitation"+friendName, getTimeout());
+		elementos.get(0).click();
+}
+	
+	
 	static public void checkMyInvitationsText(WebDriver driver, int language) {
 		// Esperamos a que se cargue el titulos de la página
 		SeleniumUtils.textoPresentePagina(driver, p.getString("invitation.title", language));
