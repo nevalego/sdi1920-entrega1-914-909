@@ -56,7 +56,8 @@ public class InvitationController {
 		if( invitation == null && friendship == null )
 			invitationsService.addInvitationFromTo(userRequesting, userResponding);
 		else if (invitation != null || friendship != null ) {
-			redirectAttrs.addFlashAttribute("mensaje", "Invitación a ese usuario ya enviada con anterioridad")
+			//"Error.friendship.repeated"
+			redirectAttrs.addFlashAttribute("mensaje","Ya existe una invitacion para este usuario")
             .addFlashAttribute("clase", "warning");
 		}
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());

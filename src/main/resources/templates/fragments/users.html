@@ -32,7 +32,7 @@
 					<td th:text="${user.name}">Nombre del usuario</td>
 					<td th:text="${user.lastName}">Apellidos del usuario</a></td>
 					<td><a sec:authorize="hasRole('ROLE_STANDARD')"
-						th:href="${'/invitation/add/' + user.id}"
+						th:id="${'btnAddFriend' + user.email}" th:href="${'/invitation/add/' + user.id}"
 						th:text="#{users.addFriend}">Agregar amigo</a>
 					</td>
 					<td><a sec:authorize="hasRole('ROLE_ADMIN')"

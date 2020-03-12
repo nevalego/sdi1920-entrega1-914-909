@@ -20,6 +20,11 @@ public class PO_UserListView extends PO_NavView {
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "btnSearch", getTimeout());
 		elementos.get(0).click();
 	}
+	
+	public static void addFriend(WebDriver driver, String friendName) {
+				List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "btnAddFriend"+friendName, getTimeout());
+				elementos.get(0).click();
+	}
 
 	static public void checkUserListText(WebDriver driver, int language) {
 		// Esperamos a que se cargue el titulos de la página

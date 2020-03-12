@@ -326,6 +326,55 @@ public class RedSocialTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "pelaval@gmail.com");
 	}
+	
+	// Prueba  15, enviar una invitacion a un usuario
+	@Test
+	public void Prueba15() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "lucasnu@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+		
+		//Mandamos una peticion de amistad
+		PO_UserListView.addFriend(driver, "maral@gmail.com");
+		
+		//Salimos de sesion
+		PO_HomeView.clickOption(driver, "/logout", "class", "btn btn-primary");
+		
+		
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario del usuario al que enviamos la peticion
+		PO_LoginView.fillForm(driver, "maral@gmail.com", "123456");
+		
+		PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
+
+		// Comprobamos que el usuario que corresponde aparece
+		SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
+	}
+	
+	// Prueba  16, enviar una invitacion a un usuario al que ya se le envio una
+	// invitacion
+		@Test
+		public void Prueba16() {
+			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+			// Rellenamos el formulario con un usuario standar
+			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+			PO_View.getP();
+
+			// Nos dirigimos a la lista de usuarios
+			PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+			
+			//Mandamos una peticion de amistad
+			PO_UserListView.addFriend(driver, "lucasnu@gmail.com");
+			
+			// Comprobamos que salta el mensaje de error
+			SeleniumUtils.textoPresentePagina(driver, "Ya existe una invitacion para este usuario");
+		}
+	
+	
 
 	//Prueba 19 Mostrar listado de amigos de un usuario y que este completa
 	@Test
@@ -347,9 +396,6 @@ public class RedSocialTests {
 				SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
 				SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
 				SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
-			
-				
-
 
 	}
 	
