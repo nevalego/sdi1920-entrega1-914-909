@@ -2,6 +2,49 @@
 	<h2 th:text="#{users.title}">Usuarios</h2>
 	<p th:text="#{users.message}">Los usuarios que actualmente figuran
 		en el sistema son los siguientes:</p>
+	
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var urlDelete = '/user/delete/';
+	var users = [[${param.userIds}]];
+	
+	$("#selectButton").click(function changeState(id) {
+		if( users.get(id) == null  ){
+			// Guardar 
+			users.add(id);
+		} else {
+			// Quitar de la lista de seleccionados
+			users.remove(id);
+		}
+	});
+	
+	$("#deleteButton").click(function deleteSelected() {
+		
+		// for each user seleccionado
+		foreach( Long id: users){
+			// delete (id)		
+			$.ajax({
+		        type: "DELETE",
+		        contentType: "application/json",
+		        url: "/user/delete/"+id,
+		        data: JSON.stringify(search),
+		        dataType: 'json',
+		        cache: false,
+		        timeout: 600000,
+		        success: function (data) {
+		    		$("#tableUsers").load('/user/list');
+		        },
+		        error: function (e) {
+		    		$("#tableUsers").load('/user/list');
+		        }
+		    });
+		});
+		
+	});
+	
+	/*]]>*/
+	</script>		
+	
 	<form class="navbar-form" action="/user/list">
 		<div class="form-group">
 			<input id="searchText" name="searchText" type="text"
@@ -12,21 +55,28 @@
 			th:text="#{users.search}">Buscar</button>
 	</form>
 	<div class="table-responsive">
-		<table class="table table-hover">
+		<table class="table table-hover" id="tableUsers">
 			<thead>
 				<tr>
 					<th th:text="#{users.email}">Email</th>
 					<th th:text="#{users.name}">Nombre</th>
 					<th th:text="#{users.surname}">Apellidos</th>
 					<th class="col-md-1"></th>
-					<th class="col-md-1"></th>
+					<th class="col-md-1">
+						<button
+						onclick="deleteSelected()"
+						id="deleteButton"
+						sec:authorize="hasRole('ROLE_ADMIN')"
+		    			 th:text="#{users.delete}">
+						Eliminar seleccionados</button>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<div
-						th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+				<div	th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
 						th:if="${mensaje != null}" th:text="${mensaje}" class="alert">
 					</div>
+				</div>
 				<tr th:each="user : ${usersList}">
 					<td th:text="${user.email}">email@email.com</td>
 					<td th:text="${user.name}">Nombre del usuario</td>
@@ -35,8 +85,13 @@
 						th:id="${'btnAddFriend' + user.email}" th:href="${'/invitation/add/' + user.id}"
 						th:text="#{users.addFriend}">Agregar amigo</a>
 					</td>
-					<td><a sec:authorize="hasRole('ROLE_ADMIN')"
-						th:href="${'/user/delete/' + user.id}" th:text="#{users.delete}">Eliminar</a></td>
+					<td><input type="checkbox"
+						name="isGoingToBeDeleted"
+						th:checked="false"
+						onClick="changeState(user.id)"
+						id="selectButton"
+						sec:authorize="hasRole('ROLE_ADMIN')"/>
+					</td>
 				</tr>
 			</tbody>
 		</table>
