@@ -26,6 +26,7 @@
 						href="#" th:text="#{nav.option.users}">Gestión de Usuarios <span class="caret"></span> 
 					</a>
 					<ul class="dropdown-menu">
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a id="btnAddUser" href="/user/add" th:text="#{nav.option.users.add}">Ver Usuarios</a></li>
 						<li><a id="btnListUsers" href="/user/list" th:text="#{nav.option.users.list}">Ver Usuarios</a></li>
 					</ul>
 				</li>

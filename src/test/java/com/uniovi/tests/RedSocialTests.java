@@ -483,20 +483,47 @@ public class RedSocialTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "Usuarios");
 
 	}
-	
+
 	// Prueba 22, Comprobar que no se puede listar publicaciones sin logearse
-		// Y que te redirige a login
-		@Test
-		public void Prueba22() {
-			// Intento 1, comprobamos que se nos redirige a la pantalla de identificarse
-			// En lugar de la lista de usuarios
-			driver.navigate().to("http://localhost:8091/publication/list");
-			SeleniumUtils.textoPresentePagina(driver, "Identificate");
-			SeleniumUtils.textoNoPresentePagina(driver, "Publicaciones");
-			SeleniumUtils.textoNoPresentePagina(driver, "Actualizar");
+	// Y que te redirige a login
+	@Test
+	public void Prueba22() {
+		// Intento 1, comprobamos que se nos redirige a la pantalla de identificarse
+		// En lugar de la lista de usuarios
+		driver.navigate().to("http://localhost:8091/publication/list");
+		SeleniumUtils.textoPresentePagina(driver, "Identificate");
+		SeleniumUtils.textoNoPresentePagina(driver, "Publicaciones");
+		SeleniumUtils.textoNoPresentePagina(driver, "Actualizar");
 
-		}
+	}
 
+	// Prueba 23, Comprobar que no se puede acceder a opciones de admin como
+	// usuario estandar
+	@Test
+	public void Prueba23() {
+		//Comprobamos que desde admin se puede acceder
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario admin
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_View.getP();
+		//Intentamos acceder a una opcion exclusiva de admin como es agregar usuarios
+		driver.navigate().to("http://localhost:8091/user/add");
+		SeleniumUtils.textoPresentePagina(driver, "Agregar usuario");
+		PO_HomeView.clickOption(driver, "/logout", "class", "btn btn-primary");
+		
+		//Nos dirigimos a login
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+		//Intentamos acceder a una opcion exclusiva de admin como es agregar usuarios
+		driver.navigate().to("http://localhost:8091/user/add");
+		//Comprobamos que nos salta una pantalla con el error de sesion prohibida
+		PO_View.checkElement(driver, "h1", "HTTP Status 403 – Forbidden");
+		
+		
+
+	}
 
 	// Prueba 26, Comprobar que todas las publicaciones de un usuario aparecen
 	@Test
