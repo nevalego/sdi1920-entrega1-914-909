@@ -471,6 +471,19 @@ public class RedSocialTests {
 
 	}
 
+	// Prueba 21, Comprobar que no se puede listar usuarios sin loggearse
+	// Y que te redirige a login
+	@Test
+	public void Prueba21() {
+		// Intento 1, comprobamos que se nos redirige a la pantalla de identificarse
+		// En lugar de la lista de usuarios
+		driver.navigate().to("http://localhost:8091/user/list");
+		SeleniumUtils.textoPresentePagina(driver, "Identificate");
+		SeleniumUtils.textoNoPresentePagina(driver, "Buscar");
+		SeleniumUtils.textoNoPresentePagina(driver, "Usuarios");
+
+	}
+
 	// Prueba 26, Comprobar que todas las publicaciones de un usuario aparecen
 	@Test
 	public void Prueba26() {
@@ -503,53 +516,52 @@ public class RedSocialTests {
 		SeleniumUtils.textoPresentePagina(driver, "Buenos dias");
 		SeleniumUtils.textoPresentePagina(driver, "Me ha pasado algo genial");
 	}
-	
-	// Prueba 28, Comprobar que no se entra en la pagina de publicaciones de una persona de la que no eres amigo
-		@Test
-		public void Prueba28() {
-			//Intento 1, comprobamos que si intentamos acceder al perfil de una persona
-			//sin loggearse nos lleva directamente a identificar
-			driver.navigate().to("http://localhost:8091/friend/details/10");
-			SeleniumUtils.textoPresentePagina(driver, "Identificate");
-			
-			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-			// Rellenamos el formulario con un usuario sin amigos
-			PO_LoginView.fillForm(driver, "lucasnu@gmail.com", "123456");
-			PO_View.getP();
 
-			//Nos dirigimos directamente al perfil de amigo de maral@gmail.com
-			//Entre la cual no comparten amistad
-			driver.navigate().to("http://localhost:8091/friend/details/10");
-			
-			//Comprobamos que nos redirige a la pagina de amigos
-			PO_UserListView.checkUserListText(driver, PO_Properties.getSPANISH());
+	// Prueba 28, Comprobar que no se entra en la pagina de publicaciones de una
+	// persona de la que no eres amigo
+	@Test
+	public void Prueba28() {
+		// Intento 1, comprobamos que si intentamos acceder al perfil de una persona
+		// sin loggearse nos lleva directamente a identificar
+		driver.navigate().to("http://localhost:8091/friend/details/10");
+		SeleniumUtils.textoPresentePagina(driver, "Identificate");
 
-		}
-		
-		
-		// Prueba 31 Mostrar todos los usuarios desde admin 
-		@Test
-		public void Prueba31() {
-			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-			// Rellenamos el formulario con un usuario standar
-			PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-			PO_View.getP();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario sin amigos
+		PO_LoginView.fillForm(driver, "lucasnu@gmail.com", "123456");
+		PO_View.getP();
 
-			// Nos dirigimos a la lista de usuarios
-			PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+		// Nos dirigimos directamente al perfil de amigo de maral@gmail.com
+		// Entre la cual no comparten amistad
+		driver.navigate().to("http://localhost:8091/friend/details/10");
 
-			// Comprobamos que el usuario loggeado no esta presente
-			SeleniumUtils.textoPresentePagina(driver, "pedrod@gmail.com");
-			// El admin tampoco debe ser visible
-			SeleniumUtils.textoPresentePagina(driver, "admin@email.com");
+		// Comprobamos que nos redirige a la pagina de amigos
+		PO_UserListView.checkUserListText(driver, PO_Properties.getSPANISH());
 
-			// Comprobamos que los demas usuarios aparecen todos
-			SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
-			SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
-			SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
-			SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+	}
 
-		}
+	// Prueba 31 Mostrar todos los usuarios desde admin
+	@Test
+	public void Prueba31() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de usuarios
+		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+
+		// Comprobamos que el usuario loggeado no esta presente
+		SeleniumUtils.textoPresentePagina(driver, "pedrod@gmail.com");
+		// El admin tampoco debe ser visible
+		SeleniumUtils.textoPresentePagina(driver, "admin@email.com");
+
+		// Comprobamos que los demas usuarios aparecen todos
+		SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+	}
 
 	// Al finalizar la última prueba
 	@AfterClass
