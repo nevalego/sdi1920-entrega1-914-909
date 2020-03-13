@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head"/>
+<head th:replace="fragments/head" />
 <body>
 
-<!-- Barra de NavegaciÃ³n superior -->
-<nav th:replace="fragments/nav"/> 
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
 
+	<div class="container">
+		<h2 th:text="#{publications.title}">Publicaciones</h2>
+		<p th:text="#{publications.text}">Las publicaciones que
+			actualmente figuran en el sistema son las siguientes:</p>
+		<button type="button" id="updateButton" class="btn btn-default"
+			th:text="#{publications.update}">Actualizar</button>
+		<script>
+			$("#updateButton").click(function() {
+				$("#tablePublications").load('/publication/list/update');
+			});
+		</script>
+		<div class="table-responsive">
+			<table class="table table-hover" th:fragment="tablePublications"
+				id="tablePublications">
+				<thead>
+					<tr>
+						<th class="col-md-1">id</th>
+						<th th:text="#{publication.info.title}">Titulo</th>
+						<th th:text="#{publication.info.text}">Texto</th>
+						<th th:text="#{publication.info.date}">Fecha</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="publication : ${publicationList}">
+						<td th:text="${publication.id}">1</td>
+						<td th:text="${publication.title}">Titulo</td>
+						<td th:text="${publication.text}">Texto</td>
+						<td th:text="${publication.date}">Fecha</td>
+						<td><a th:href="${'/publication/details/' + publication.id}"
+							th:text="#{publications.info.details}">detalles</a></td>
+						<td><a th:href="${'/publication/delete/' + publication.id}"
+							th:text="#{users.delete}">eliminar</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
-
-<div class="container">
-  <h2 th:text="#{publications.title}">Publicaciones</h2>
-  <p th:text="#{publications.text}">Las publicaciones que actualmente figuran en el sistema son las siguientes:</p>                                                                                      
-  <button type="button" id="updateButton" class="btn btn-default" th:text="#{publications.update}">Actualizar</button>
-  <script>
-  		$( "#updateButton" ).click(function() {
-  			$("#tablePublications").load('/publication/list/update');
-  		});
-  </script>
-  <div class="table-responsive">          
-  <table class="table table-hover" th:fragment="tablePublications" id="tablePublications">
-    <thead>
-      <tr>
-        <th class="col-md-1">id</th>
-        <th th:text="#{publication.info.title}">Titulo</th>
-        <th th:text="#{publication.info.text}">Texto</th>
-        <th th:text="#{publication.info.date}">Fecha</th>
-		<th class="col-md-1"> </th>
-		<th class="col-md-1"> </th>
-		<th class="col-md-1"> </th>
-      </tr>
-    </thead>
-	<tbody>
-	  <tr th:each="publication : ${publicationList}">
-	    <td th:text="${publication.id}"> 1</td>
-	    <td th:text="${publication.title}"> Titulo</td>
-	    <td th:text="${publication.text}">Texto</td>
-	    <td th:text="${publication.date}">Fecha</td>
-	    <td><a th:href="${'/publication/details/' + publication.id}" th:text="#{publications.info.details}">detalles</a></td>
-	    <td><a th:href="${'/publication/delete/' + publication.id}"  th:text="#{users.delete}">eliminar</a></td>
-	  </tr>
-	</tbody>
-  </table>
-  </div>
-</div>
-
-<footer th:replace="fragments/footer"/>
+	<footer th:replace="fragments/footer" />
 </body>
 </html>

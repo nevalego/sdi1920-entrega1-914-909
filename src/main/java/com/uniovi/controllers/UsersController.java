@@ -33,14 +33,13 @@ public class UsersController {
 
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 
 	@Autowired
 	private RolesService rolesService;
 
-	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
@@ -48,9 +47,9 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signup( @Validated User user, BindingResult result) {
+	public String signup(@Validated User user, BindingResult result) {
 		signUpFormValidator.validate(user, result);
-		if( result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "signup";
 		}
 		user.setRole(rolesService.getRoles()[0]);
@@ -60,8 +59,8 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(@RequestParam(value="error", required = false) String error, Model model) {
-		if ( error != null ) {
+	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+		if (error != null) {
 			model.addAttribute("error", error);
 		}
 		return "login";
@@ -73,21 +72,21 @@ public class UsersController {
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		List<User> users = new ArrayList<User>();
-		
-		if( activeUser.getRole().equals(rolesService.getRoles()[1])) {
+
+		if (activeUser.getRole().equals(rolesService.getRoles()[1])) {
 			// Si es Admin devuelve todos los usuarios del sistema
-			if( searchText != null && !searchText.isEmpty() ) {
+			if (searchText != null && !searchText.isEmpty()) {
 				users = usersService.searchUserByNameLastNameAndEmail(searchText);
 			} else {
 				users = usersService.getUsers();
 			}
 			model.addAttribute("usersList", users);
-			
+
 		} else {
 			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
-			
-			if( searchText != null && !searchText.isEmpty() ) {
-				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable,searchText);
+
+			if (searchText != null && !searchText.isEmpty()) {
+				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable, searchText);
 			} else {
 				usersPageable = usersService.getUsersForUser(pageable, activeUser);
 			}
@@ -104,21 +103,21 @@ public class UsersController {
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		List<User> users = new ArrayList<User>();
-		
-		if( activeUser.getRole().equals(rolesService.getRoles()[1])) {
+
+		if (activeUser.getRole().equals(rolesService.getRoles()[1])) {
 			// Si es Admin devuelve todos los usuarios del sistema
-			if( searchText != null && !searchText.isEmpty() ) {
+			if (searchText != null && !searchText.isEmpty()) {
 				users = usersService.searchUserByNameLastNameAndEmail(searchText);
 			} else {
 				users = usersService.getUsers();
 			}
 			model.addAttribute("usersList", users);
-			
+
 		} else {
 			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
-			
-			if( searchText != null && !searchText.isEmpty() ) {
-				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable,searchText);
+
+			if (searchText != null && !searchText.isEmpty()) {
+				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable, searchText);
 			} else {
 				usersPageable = usersService.getUsersForUser(pageable, activeUser);
 			}

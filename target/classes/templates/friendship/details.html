@@ -3,20 +3,14 @@
 <head th:replace="fragments/head" />
 <body>
 
-	<!-- Barra de Navegación superior -->
+	<!-- Barra de NavegaciÃ³n superior -->
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
-		<h2 th:text="#{publications.title}">Publicaciones</h2>
-		<p th:text="#{publications.text}">Las publicaciones que
-			actualmente figuran en el sistema son las siguientes:</p>
-		<button type="button" id="updateButton" class="btn btn-default"
-			th:text="#{publications.update}">Actualizar</button>
-		<script>
-			$("#updateButton").click(function() {
-				$("#tablePublications").load('/publication/list/update');
-			});
-		</script>
+		<h2 th:text="${user.name}">Nombre</h2>
+		<h3 th:text="#{publications.title}">Publicaciones</h3>
+		<p th:text="#{friends.info.publications}">Las publicaciones que tiene el
+			usuario son las siguientes:</p>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tablePublications"
 				id="tablePublications">
@@ -26,9 +20,6 @@
 						<th th:text="#{publication.info.title}">Titulo</th>
 						<th th:text="#{publication.info.text}">Texto</th>
 						<th th:text="#{publication.info.date}">Fecha</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,10 +28,6 @@
 						<td th:text="${publication.title}">Titulo</td>
 						<td th:text="${publication.text}">Texto</td>
 						<td th:text="${publication.date}">Fecha</td>
-						<td><a th:href="${'/publication/details/' + publication.id}"
-							th:text="#{publications.info.details}">detalles</a></td>
-						<td><a th:href="${'/publication/delete/' + publication.id}"
-							th:text="#{users.delete}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -48,5 +35,6 @@
 	</div>
 
 	<footer th:replace="fragments/footer" />
+
 </body>
 </html>
