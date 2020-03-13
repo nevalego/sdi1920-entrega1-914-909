@@ -524,6 +524,24 @@ public class RedSocialTests {
 		
 
 	}
+	
+	// Prueba 25, Comprobar que en caso de no rellenar los campos al agregar una publicacion
+	// Salta un error
+		@Test
+		public void Prueba25() {
+			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+			// Rellenamos el formulario con un usuario standar
+			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+			PO_View.getP();
+
+			// Nos dirigimos a la lista de publicaciones
+			PO_NavView.checkNavMode(driver, "publications-menu", "btnAddPublication");
+			PO_Publications.addPublications(driver, "", "texto", "20/03/2020");
+			// Comprobamos que no nos saco de la pagina de Publicaciones
+			PO_Publications.checkAddPublication(driver, PO_Properties.getSPANISH());
+		}
+
+
 
 	// Prueba 26, Comprobar que todas las publicaciones de un usuario aparecen
 	@Test

@@ -1,10 +1,33 @@
 package com.uniovi.tests.pageobjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.uniovi.tests.util.SeleniumUtils;
 
 public class PO_Publications extends PO_NavView {
+
+	static public void addPublications(WebDriver driver, String titulo, String texto, String fecha) {
+		WebElement title = driver.findElement(By.name("title"));
+		title.click();
+		title.clear();
+		title.sendKeys(titulo);
+		WebElement text = driver.findElement(By.name("text"));
+		text.click();
+		text.clear();
+		text.sendKeys(texto);
+
+//		WebElement date = driver.findElement(By.name("date"));
+//
+//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//		LocalDate localDate = LocalDate.now();
+//		date.sendKeys(dtf.format(localDate));
+
+		// Pulsar el boton de Alta.
+		By boton = By.id("btnAdd");
+		driver.findElement(boton).click();
+	}
 
 	static public void checkMyPublicationsText(WebDriver driver, int language) {
 		// Esperamos a que se cargue el titulos de la página
@@ -51,8 +74,8 @@ public class PO_Publications extends PO_NavView {
 		SeleniumUtils.textoPresentePagina(driver, p.getString("footer.message", language));
 	}
 
-	static public void checkMyPublicationsListChangeIdiom(WebDriver driver, String textIdiom1, String textIdiom2, int locale1,
-			int locale2) {
+	static public void checkMyPublicationsListChangeIdiom(WebDriver driver, String textIdiom1, String textIdiom2,
+			int locale1, int locale2) {
 		// Esperamos a que se cargue el saludo de bienvenida en Español
 		checkMyPublicationsText(driver, locale1);
 		// Cambiamos a segundo idioma
@@ -64,9 +87,9 @@ public class PO_Publications extends PO_NavView {
 		// Esperamos a que se cargue el saludo de bienvenida en Español
 		checkMyPublicationsText(driver, locale1);
 	}
-	
-	static public void checkAddPublicationChangeIdiom(WebDriver driver, String textIdiom1, String textIdiom2, int locale1,
-			int locale2) {
+
+	static public void checkAddPublicationChangeIdiom(WebDriver driver, String textIdiom1, String textIdiom2,
+			int locale1, int locale2) {
 		// Esperamos a que se cargue el saludo de bienvenida en Español
 		checkAddPublication(driver, locale1);
 		// Cambiamos a segundo idioma
