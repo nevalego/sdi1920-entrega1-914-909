@@ -371,41 +371,39 @@ public class RedSocialTests {
 		// Comprobamos que salta el mensaje de error
 		SeleniumUtils.textoPresentePagina(driver, "Ya existe una invitacion para este usuario");
 	}
-	
+
 	// Prueba 17, Comprobar que un usuario tiene mas de una invitacion de amistad
-		@Test
-		public void Prueba17() {
-			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-			// Rellenamos el formulario con un usuario standar
-			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-			PO_View.getP();
+	@Test
+	public void Prueba17() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
 
-			// Nos dirigimos a la lista de invitaciones	
-			PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
-			
+		// Nos dirigimos a la lista de invitaciones
+		PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
 
-			// Comprobamos que aparecen los usuarios dichos
-			SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
-			SeleniumUtils.textoPresentePagina(driver, "admin@email.com");
-		}
-		
-		// Prueba 18, Comprobar que un usuario desaparece cuando aceptas su invitacion
-				@Test
-				public void Prueba18() {
-					PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-					// Rellenamos el formulario con un usuario standar
-					PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-					PO_View.getP();
+		// Comprobamos que aparecen los usuarios dichos
+		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "admin@email.com");
+	}
 
-					// Nos dirigimos a la lista de invitaciones	
-					PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
-					SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
-					PO_FriendsView.aceptInvitation(driver, "mariar@gmail.com");
-					
-					// Comprobamos que salta el mensaje de error
-					SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
-				}
-	
+	// Prueba 18, Comprobar que un usuario desaparece cuando aceptas su invitacion
+	@Test
+	public void Prueba18() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de invitaciones
+		PO_NavView.checkNavMode(driver, "friends-menu", "btnListInvitations");
+		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+		PO_FriendsView.aceptInvitation(driver, "mariar@gmail.com");
+
+		// Comprobamos que salta el mensaje de error
+		SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
+	}
 
 	// Prueba 19 Mostrar listado de amigos de un usuario y que este completa
 	@Test
@@ -472,25 +470,61 @@ public class RedSocialTests {
 				PO_Properties.getENGLISH());
 
 	}
-	
-	
+
 	// Prueba 26, Comprobar que todas las publicaciones de un usuario aparecen
-			@Test
-			public void Prueba26() {
-				PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-				// Rellenamos el formulario con un usuario standar
-				PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-				PO_View.getP();
+	@Test
+	public void Prueba26() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
 
-				// Nos dirigimos a la lista de invitaciones	
-				PO_NavView.checkNavMode(driver, "publications-menu", "btnListPublications");
-				
+		// Nos dirigimos a la lista de publicaciones
+		PO_NavView.checkNavMode(driver, "publications-menu", "btnListPublications");
 
-				// Comprobamos que aparecen los usuarios dichos
-				SeleniumUtils.textoPresentePagina(driver, "Buenos dias");
-				SeleniumUtils.textoPresentePagina(driver, "Me ha pasado algo genial");
-			}
+		// Comprobamos que aparecen las publicaciones esperadas
+		SeleniumUtils.textoPresentePagina(driver, "Buenos dias");
+		SeleniumUtils.textoPresentePagina(driver, "Me ha pasado algo genial");
+	}
+
+	// Prueba 27, Comprobar que se muestran las publicaciones de un amigo
+	@Test
+	public void Prueba27() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "maral@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de amigos
+		PO_NavView.checkNavMode(driver, "friends-menu", "btnListFriends");
+
+		PO_FriendsView.seeFriendsDetails(driver, "pedrod@gmail.com");
+		// Comprobamos que aparecen las publicaciones esperadas
+		SeleniumUtils.textoPresentePagina(driver, "Buenos dias");
+		SeleniumUtils.textoPresentePagina(driver, "Me ha pasado algo genial");
+	}
 	
+	// Prueba 28, Comprobar que no se entra en la pagina de publicaciones de una persona de la que no eres amigo
+		@Test
+		public void Prueba28() {
+			//Intento 1, comprobamos que si intentamos acceder al perfil de una persona
+			//sin loggearse nos lleva directamente a identificar
+			driver.navigate().to("http://localhost:8091/friend/details/10");
+			SeleniumUtils.textoPresentePagina(driver, "Identificate");
+			
+			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+			// Rellenamos el formulario con un usuario sin amigos
+			PO_LoginView.fillForm(driver, "lucasnu@gmail.com", "123456");
+			PO_View.getP();
+
+			//Nos dirigimos directamente al perfil de amigo de maral@gmail.com
+			//Entre la cual no comparten amistad
+			driver.navigate().to("http://localhost:8091/friend/details/10");
+			
+			//Comprobamos que nos redirige a la pagina de amigos
+			PO_UserListView.checkUserListText(driver, PO_Properties.getSPANISH());
+
+		}
 
 	// Al finalizar la última prueba
 	@AfterClass
