@@ -483,6 +483,20 @@ public class RedSocialTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "Usuarios");
 
 	}
+	
+	// Prueba 22, Comprobar que no se puede listar publicaciones sin logearse
+		// Y que te redirige a login
+		@Test
+		public void Prueba22() {
+			// Intento 1, comprobamos que se nos redirige a la pantalla de identificarse
+			// En lugar de la lista de usuarios
+			driver.navigate().to("http://localhost:8091/publication/list");
+			SeleniumUtils.textoPresentePagina(driver, "Identificate");
+			SeleniumUtils.textoNoPresentePagina(driver, "Publicaciones");
+			SeleniumUtils.textoNoPresentePagina(driver, "Actualizar");
+
+		}
+
 
 	// Prueba 26, Comprobar que todas las publicaciones de un usuario aparecen
 	@Test
