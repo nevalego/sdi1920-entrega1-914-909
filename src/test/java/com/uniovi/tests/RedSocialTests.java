@@ -525,6 +525,31 @@ public class RedSocialTests {
 			PO_UserListView.checkUserListText(driver, PO_Properties.getSPANISH());
 
 		}
+		
+		
+		// Prueba 31 Mostrar todos los usuarios desde admin 
+		@Test
+		public void Prueba31() {
+			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+			// Rellenamos el formulario con un usuario standar
+			PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+			PO_View.getP();
+
+			// Nos dirigimos a la lista de usuarios
+			PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
+
+			// Comprobamos que el usuario loggeado no esta presente
+			SeleniumUtils.textoPresentePagina(driver, "pedrod@gmail.com");
+			// El admin tampoco debe ser visible
+			SeleniumUtils.textoPresentePagina(driver, "admin@email.com");
+
+			// Comprobamos que los demas usuarios aparecen todos
+			SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
+			SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
+			SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
+			SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+
+		}
 
 	// Al finalizar la última prueba
 	@AfterClass
