@@ -29,6 +29,12 @@ public class FriendshipService {
 		
 		return getFriendsOf(user1, friends); 
 	}
+	
+	public Friendship getFriendsOfUser( User user1, User user2) {
+		Friendship friends = friendshipRepository.findByUsers(user1, user2);
+		
+		return friends; 
+	}
 
 	private Page<User> getFriendsOf(User user1, Page<Friendship> friendships) {
 		List<User> friends = new LinkedList<User>();

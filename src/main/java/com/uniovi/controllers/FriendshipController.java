@@ -48,7 +48,14 @@ public class FriendshipController {
 	
 	@RequestMapping("/friend/details/{id}")
 	public String getFriendDetails(Model model, @PathVariable Long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = usersService.getUser(id);
+		
+		//Se comprueba que los usuarios son amigos
+		//En caso de no serlo se le redirige a la lista de amigos
+		if(friendshipService.getFriendsOfUser(usersService.getUserByEmail(auth.getName()), user)==null) {
+			return "redirect:/friendship/list";
+		}
 		model.addAttribute("user", user);
 		model.addAttribute("publicationList", publicationsService.getPublicationsForUser(user));
 		return "friendship/details";
