@@ -145,11 +145,9 @@ public class RedSocialTests {
 		// Caso 1:
 		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
 		PO_View.getP();
-		// Nos dirigimos a la opcion lista de usuarios
-		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-		// Comprobamos que el email del usuario se encuentra entre los usuarios
-		// mostrados porque es el admin
-		PO_View.checkElement(driver, "text", "admin@email.com");
+		// Nos dirigimos a la opcion añadir usuarios que solo puede ser accedida por el admin
+		PO_NavView.checkNavMode(driver, "users-menu", "btnAddUser");
+		SeleniumUtils.textoPresentePagina(driver, "Agregar usuario");
 	}
 
 	// Prueba 6 inicio de sesion como user
