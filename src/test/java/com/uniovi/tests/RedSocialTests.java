@@ -143,13 +143,11 @@ public class RedSocialTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario.
 		// Caso 1:
-		PO_LoginView.fillForm(driver, "ednu@gmail.com", "123456");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
 		PO_View.getP();
-		// Nos dirigimos a la opcion lista de usuarios
-		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-		// Comprobamos que el email del usuario no se encuentra entre los usuarios
-		// mostrados
-		PO_View.checkElement(driver, "text", "ednu@gmail.com");
+		// Nos dirigimos a la opcion añadir usuarios que solo puede ser accedida por el admin
+		PO_NavView.checkNavMode(driver, "users-menu", "btnAddUser");
+		SeleniumUtils.textoPresentePagina(driver, "Agregar usuario");
 	}
 
 	// Prueba 6 inicio de sesion como user
@@ -420,9 +418,9 @@ public class RedSocialTests {
 		// Comprobamos que el usuario que corresponde aparece
 		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
 		SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
 
 		// Comprobamos que no aparece ninguno mas
-		SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
 
@@ -501,47 +499,63 @@ public class RedSocialTests {
 	// usuario estandar
 	@Test
 	public void Prueba23() {
-		//Comprobamos que desde admin se puede acceder
+		// Comprobamos que desde admin se puede acceder
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario con un usuario admin
 		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
 		PO_View.getP();
-		//Intentamos acceder a una opcion exclusiva de admin como es agregar usuarios
+		// Intentamos acceder a una opcion exclusiva de admin como es agregar usuarios
 		driver.navigate().to("http://localhost:8091/user/add");
 		SeleniumUtils.textoPresentePagina(driver, "Agregar usuario");
 		PO_HomeView.clickOption(driver, "/logout", "class", "btn btn-primary");
-		
-		//Nos dirigimos a login
+
+		// Nos dirigimos a login
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario con un usuario standar
 		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
 		PO_View.getP();
-		//Intentamos acceder a una opcion exclusiva de admin como es agregar usuarios
+		// Intentamos acceder a una opcion exclusiva de admin como es agregar usuarios
 		driver.navigate().to("http://localhost:8091/user/add");
-		//Comprobamos que nos salta una pantalla con el error de sesion prohibida
+		// Comprobamos que nos salta una pantalla con el error de sesion prohibida
 		PO_View.checkElement(driver, "h1", "HTTP Status 403 – Forbidden");
-		
-		
 
 	}
-	
-	// Prueba 25, Comprobar que en caso de no rellenar los campos al agregar una publicacion
+
+	// Prueba 24, Añadir una publicacion y comprobar que se ha introducido
+	@Test
+	public void Prueba24() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
+
+		// Nos dirigimos a la lista de publicaciones
+		PO_NavView.checkNavMode(driver, "publications-menu", "btnAddPublication");
+		// Agregamos una publicacion especifica
+		PO_Publications.addPublications(driver, "This is Prueba24", "Prueba");
+		// Comprobamos que no nos saco de la pagina de Publicaciones
+		PO_Publications.checkMyPublicationsText(driver, PO_Properties.getSPANISH());
+
+		// Comprobamos que esta nuestra nueva publicacion
+		SeleniumUtils.textoPresentePagina(driver, "This is Prueba24");
+	}
+
+	// Prueba 25, Comprobar que en caso de no rellenar los campos al agregar una
+	// publicacion
 	// Salta un error
-		@Test
-		public void Prueba25() {
-			PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-			// Rellenamos el formulario con un usuario standar
-			PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
-			PO_View.getP();
+	@Test
+	public void Prueba25() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario con un usuario standar
+		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "123456");
+		PO_View.getP();
 
-			// Nos dirigimos a la lista de publicaciones
-			PO_NavView.checkNavMode(driver, "publications-menu", "btnAddPublication");
-			PO_Publications.addPublications(driver, "", "texto", "20/03/2020");
-			// Comprobamos que no nos saco de la pagina de Publicaciones
-			PO_Publications.checkAddPublication(driver, PO_Properties.getSPANISH());
-		}
-
-
+		// Nos dirigimos a la lista de publicaciones
+		PO_NavView.checkNavMode(driver, "publications-menu", "btnAddPublication");
+		PO_Publications.addPublications(driver, "", "texto");
+		// Comprobamos que no nos saco de la pagina de Publicaciones
+		PO_Publications.checkAddPublication(driver, PO_Properties.getSPANISH());
+	}
 
 	// Prueba 26, Comprobar que todas las publicaciones de un usuario aparecen
 	@Test

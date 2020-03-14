@@ -8,7 +8,7 @@ import com.uniovi.tests.util.SeleniumUtils;
 
 public class PO_Publications extends PO_NavView {
 
-	static public void addPublications(WebDriver driver, String titulo, String texto, String fecha) {
+	static public void addPublications(WebDriver driver, String titulo, String texto) {
 		WebElement title = driver.findElement(By.name("title"));
 		title.click();
 		title.clear();
@@ -17,12 +17,6 @@ public class PO_Publications extends PO_NavView {
 		text.click();
 		text.clear();
 		text.sendKeys(texto);
-
-//		WebElement date = driver.findElement(By.name("date"));
-//
-//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//		LocalDate localDate = LocalDate.now();
-//		date.sendKeys(dtf.format(localDate));
 
 		// Pulsar el boton de Alta.
 		By boton = By.id("btnAdd");
@@ -64,9 +58,6 @@ public class PO_Publications extends PO_NavView {
 		SeleniumUtils.textoPresentePagina(driver, p.getString("publication.info.title", language));
 		// Esperamos a que se cargue la columna apellidos
 		SeleniumUtils.textoPresentePagina(driver, p.getString("publication.info.text", language));
-
-		// Esperamos a que se cargue las opciones añadir amigos
-		SeleniumUtils.textoPresentePagina(driver, p.getString("publication.info.date", language));
 
 		// Esperamos a que se cargue las opciones añadir amigos
 		SeleniumUtils.textoPresentePagina(driver, p.getString("users.send", language));
