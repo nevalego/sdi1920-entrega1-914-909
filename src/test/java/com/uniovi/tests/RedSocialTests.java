@@ -143,13 +143,13 @@ public class RedSocialTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario.
 		// Caso 1:
-		PO_LoginView.fillForm(driver, "ednu@gmail.com", "123456");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
 		PO_View.getP();
 		// Nos dirigimos a la opcion lista de usuarios
 		PO_NavView.checkNavMode(driver, "users-menu", "btnListUsers");
-		// Comprobamos que el email del usuario no se encuentra entre los usuarios
-		// mostrados
-		PO_View.checkElement(driver, "text", "ednu@gmail.com");
+		// Comprobamos que el email del usuario se encuentra entre los usuarios
+		// mostrados porque es el admin
+		PO_View.checkElement(driver, "text", "admin@email.com");
 	}
 
 	// Prueba 6 inicio de sesion como user
@@ -420,9 +420,9 @@ public class RedSocialTests {
 		// Comprobamos que el usuario que corresponde aparece
 		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
 		SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
 
 		// Comprobamos que no aparece ninguno mas
-		SeleniumUtils.textoNoPresentePagina(driver, "mariar@gmail.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
 

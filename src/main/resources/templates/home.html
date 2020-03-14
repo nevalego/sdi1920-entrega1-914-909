@@ -8,8 +8,7 @@
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
 		<h3 th:text="#{home.subTitle}">Red Social</h3>
-		<p th:text="#{home.text}">
-			Usuario Autenticado como: <b th:inline="text">
+		<p> <span th:text="#{home.text}"></span><b th:inline="text">
 				[[${#httpServletRequest.remoteUser}]] </b>
 		</p>
 	</div>

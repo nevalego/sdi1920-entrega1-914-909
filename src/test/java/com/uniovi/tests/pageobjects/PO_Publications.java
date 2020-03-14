@@ -60,9 +60,6 @@ public class PO_Publications extends PO_NavView {
 		SeleniumUtils.textoPresentePagina(driver, p.getString("publication.info.text", language));
 
 		// Esperamos a que se cargue las opciones añadir amigos
-		SeleniumUtils.textoPresentePagina(driver, p.getString("publication.info.date", language));
-
-		// Esperamos a que se cargue las opciones añadir amigos
 		SeleniumUtils.textoPresentePagina(driver, p.getString("users.send", language));
 		// Esperamos a que se cargue el footer
 		SeleniumUtils.textoPresentePagina(driver, p.getString("footer.message", language));
