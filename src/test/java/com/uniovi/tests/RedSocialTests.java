@@ -191,6 +191,7 @@ public class RedSocialTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario con un usuario standar
 		PO_LoginView.fillForm(driver, "pedrod@gmail.com", "444444");
+		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
 		PO_View.getP();
 		// Comprobamos que devuelve error por contraseña invalida
 		// PO_RegisterView.checkKey(driver, "Error.login.password.notMatch",
