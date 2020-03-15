@@ -9,6 +9,13 @@ import org.springframework.validation.Validator;
 import com.uniovi.entities.User;
 import com.uniovi.services.UsersService;
 
+/**
+ * This class is aimed to define the validation
+ * for the sign up form
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Component
 public class SignUpFormValidator implements Validator {
 

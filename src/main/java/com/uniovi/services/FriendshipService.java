@@ -13,6 +13,13 @@ import com.uniovi.entities.Friendship;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.FriendshipRepository;
 
+/**
+ * This class is aimed to define the services
+ * for the friendship functionalities
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Service
 public class FriendshipService {
 

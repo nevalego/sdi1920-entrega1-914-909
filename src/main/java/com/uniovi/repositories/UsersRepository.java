@@ -9,6 +9,13 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.uniovi.entities.User;
 
+/**
+ * This interface is aimed to define the queries for user table in the
+ * database
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 public interface UsersRepository extends CrudRepository<User, Long> {
 
     User findByEmail(String email);

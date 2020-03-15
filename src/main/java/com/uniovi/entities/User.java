@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+/**
+ * This class is aimed to define the entity user
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Entity
 public class User {
 

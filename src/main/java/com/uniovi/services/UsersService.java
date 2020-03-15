@@ -14,6 +14,13 @@ import org.springframework.stereotype.Service;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
+/**
+ * This class is aimed to define the services
+ * for the user functionalities
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Service
 public class UsersService {
 

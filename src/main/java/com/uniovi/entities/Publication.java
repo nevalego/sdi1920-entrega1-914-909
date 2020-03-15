@@ -10,6 +10,11 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * This class is aimed to define the entity publication
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Entity
 public class Publication {
 

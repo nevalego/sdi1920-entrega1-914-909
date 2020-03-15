@@ -18,6 +18,11 @@ import com.uniovi.services.FriendshipService;
 import com.uniovi.services.PublicationsService;
 import com.uniovi.services.UsersService;
 
+/**
+ * This class is aimed to receive the requests for friendship
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Controller
 public class FriendshipController {
 

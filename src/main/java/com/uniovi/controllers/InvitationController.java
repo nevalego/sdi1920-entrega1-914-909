@@ -21,6 +21,11 @@ import com.uniovi.services.FriendshipService;
 import com.uniovi.services.InvitationService;
 import com.uniovi.services.UsersService;
 
+/**
+ * This class is aimed to receive the requests for invitations
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Controller
 public class InvitationController {
 

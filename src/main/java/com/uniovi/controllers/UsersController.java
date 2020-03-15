@@ -26,6 +26,11 @@ import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
 
+/**
+ * This class is aimed to receive the requests for users
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Controller
 public class UsersController {
     @Autowired

@@ -6,6 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * This class is aimed to define the entity invitation
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Entity
 public class Invitation {
 

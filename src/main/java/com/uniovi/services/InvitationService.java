@@ -12,6 +12,13 @@ import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.InvitationsRepository;
 
+/**
+ * This class is aimed to define the services
+ * for the invitation functionalities
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Service
 public class InvitationService {
 

@@ -14,6 +14,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+/**
+ * This class is aimed to define the 
+ * specific configuration for the application
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Configuration
 public class CustomConfiguration implements WebMvcConfigurer {
 

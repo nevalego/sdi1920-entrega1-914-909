@@ -13,6 +13,13 @@ import org.springframework.stereotype.Service;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
+/**
+ * This class is aimed to define the user details method to load a user by its
+ * username (email)
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 

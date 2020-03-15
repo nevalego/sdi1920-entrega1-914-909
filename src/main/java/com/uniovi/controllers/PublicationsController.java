@@ -16,6 +16,11 @@ import com.uniovi.entities.User;
 import com.uniovi.services.PublicationsService;
 import com.uniovi.services.UsersService;
 
+/**
+ * This class is aimed to receive the requests for publications
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Controller
 public class PublicationsController {
 

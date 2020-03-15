@@ -12,6 +12,14 @@ import org.springframework.stereotype.Service;
 import com.uniovi.entities.Publication;
 import com.uniovi.entities.User;
 
+/**
+ * This class is aimed to insert data in the
+ * database when application.properties is setted:
+ * spring.jpa.hibernate.ddl-auto=create 
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Service
 public class InsertDataService {
     @Autowired

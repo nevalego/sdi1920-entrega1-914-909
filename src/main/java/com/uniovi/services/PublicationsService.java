@@ -11,6 +11,13 @@ import com.uniovi.entities.Publication;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.PublicationsRepository;
 
+/**
+ * This class is aimed to define the services
+ * for the publication functionalities
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Service
 public class PublicationsService {
 

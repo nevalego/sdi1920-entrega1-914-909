@@ -10,6 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;;
 
+/**
+ * This class is aimed to define the security
+ * 
+ * @author Nerea Valdés Egocheaga
+ *
+ */
 @Service
 public class SecurityService {
     @Autowired
