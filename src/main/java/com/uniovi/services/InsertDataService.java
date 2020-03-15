@@ -57,7 +57,6 @@ public class InsertDataService {
 	User user7 = new User("elendi@gmail.com", "Elena", "Ruiz");
 	user7.setPassword("123456");
 	user7.setRole(rolesService.getRoles()[0]);
-
 	User user8 = new User("llera@gmail.com", "Adrian", "Llera Lona");
 	user8.setPassword("123456");
 	user8.setRole(rolesService.getRoles()[0]);
@@ -70,6 +69,7 @@ public class InsertDataService {
 		"Comentario", new Date(), user1));
 
 	user1.setPublications(user1Publications);
+	
 	Set<Publication> user2Publications = new HashSet<Publication>();
 
 	user2Publications
@@ -78,6 +78,7 @@ public class InsertDataService {
 		new Date(), user2));
 
 	user2.setPublications(user2Publications);
+	
 	Set<Publication> user3Publications = new HashSet<Publication>();
 	user3Publications.add(
 		new Publication("Genial!", "Respuesta", new Date(), user3));
@@ -85,6 +86,32 @@ public class InsertDataService {
 		new Date(), user3));
 
 	user3.setPublications(user3Publications);
+	
+	Set<Publication> user4Publications = new HashSet<Publication>();
+
+	user4Publications
+		.add(new Publication("Tengo hambre", "Me apetece pizza", new Date(), user4));
+	user4Publications.add(new Publication("Que tal os va", "Pregunta",
+		new Date(), user4));
+
+	user4.setPublications(user4Publications);
+	
+	Set<Publication> user5Publications = new HashSet<Publication>();
+
+	user5Publications
+		.add(new Publication("Me estallo", "Risa", new Date(), user5));
+	user5Publications.add(new Publication("Que buen chiste", "Club de la comedia o que",
+		new Date(), user5));
+
+	user5.setPublications(user5Publications);
+	Set<Publication> user7Publications = new HashSet<Publication>();
+
+	user7Publications
+		.add(new Publication("Que tal estais?", "Risa", new Date(), user7));
+	user7Publications.add(new Publication("Todo bien?", "Todo correcto? Yo me alegro",
+		new Date(), user7));
+
+	user7.setPublications(user7Publications);
 
 	usersService.addUser(user1);
 	usersService.addUser(user2);
@@ -104,6 +131,10 @@ public class InsertDataService {
 	friendshipService.addFriendship(user1, user4);
 	friendshipService.addFriendship(user1, user5);
 	friendshipService.addFriendship(user7, user2);
+	friendshipService.addFriendship(user2, user1);
+	friendshipService.addFriendship(user3, user7);
+	friendshipService.addFriendship(user4, user3);
+	friendshipService.addFriendship(user5, user4);
 
     }
 }
