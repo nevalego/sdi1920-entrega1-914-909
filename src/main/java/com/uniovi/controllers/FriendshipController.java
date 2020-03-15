@@ -57,22 +57,22 @@ public class FriendshipController {
 	return "friendship/list";
     }
 
-    @RequestMapping("/friend/details/{id}")
+    @RequestMapping("/friendship/details/{id}")
     public String getFriendDetails(Model model, @PathVariable Long id) {
 	Authentication auth = SecurityContextHolder.getContext()
 		.getAuthentication();
 	String email = auth.getName();
 	User user1 = usersService.getUserByEmail(email);
-
+	User user2 = usersService.getUser(id);
 	// Se comprueba que los usuarios son amigos
 	// En caso de no serlo se le redirige a la lista de amigos
-	if (friendshipService.getFriendshipOfUsers(usersService.getUser(id),user1) == null) {
+	if (friendshipService.getFriendshipOfUsers(user2,user1) == null) {
 	    return "redirect:/user/list";
 	}
-	model.addAttribute("user", user1);
+	model.addAttribute("user", user2);
 	model.addAttribute(" publicationList",
 		publicationsService.getPublicationsForUser(user1));
-	return "friend/details";
+	return "friendship/details";
     }
 
 }

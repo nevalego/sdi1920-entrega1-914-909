@@ -24,7 +24,7 @@
 						<td th:text="${friend.email}">email@email.com</td>
 						<td th:text="${friend.name}">Nombre del usuario</td>
 						<td th:text="${friend.lastName}">Apellidos del usuario</a></td>
-						<td><a th:id="${'btnFriendDetails' + friend.email}" th:href="${'/friend/details/' + friend.id}"
+						<td><a th:id="${'btnFriendDetails' + friend.email}" th:href="${'/friendship/details/' + friend.id}"
 						th:text="#{friends.info.details}">Ver Amigo</a>
 					</tr>
 				</tbody>
