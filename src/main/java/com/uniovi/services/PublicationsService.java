@@ -1,6 +1,7 @@
 package com.uniovi.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class PublicationsService {
 
 	public void addPublication(Publication publication) {
 		// Si en Id es null le asignamos el ultimo + 1 de la lista
+		publication.setDate(new Date()); // Fecha de publicación
 		publicationsRepository.save(publication);
 	}
 

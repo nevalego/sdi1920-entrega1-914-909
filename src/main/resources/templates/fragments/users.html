@@ -12,21 +12,44 @@
 			th:text="#{users.search}">Buscar</button>
 	</form>
 	<div class="table-responsive">
-		<table class="table table-hover">
+		<table class="table table-hover" id="tableUsers">
 			<thead>
 				<tr>
 					<th th:text="#{users.email}">Email</th>
 					<th th:text="#{users.name}">Nombre</th>
 					<th th:text="#{users.surname}">Apellidos</th>
 					<th class="col-md-1"></th>
-					<th class="col-md-1"></th>
+					<th class="col-md-1">
+						<button type="button"
+						id="deleteButton"
+						sec:authorize="hasRole('ROLE_ADMIN')"
+		    			 th:text="#{users.delete}">
+						Eliminar</button>
+						<script>
+							var users = [[${param.userIds}]];
+							
+							$("#selectButton").click(function(id) {
+								if( users.get(id) == null  ){
+									// Guardar 
+									users.add(id);
+								} else {
+									// Quitar de la lista de seleccionados
+									users.remove(id);
+								}
+							});
+							
+							$("#deleteButton").click(function() {
+								$("#tableUsers").load('/user/delete');
+							});
+							</script>		
+					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<div
-						th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+				<div	th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
 						th:if="${mensaje != null}" th:text="${mensaje}" class="alert">
 					</div>
+				</div>
 				<tr th:each="user : ${usersList}">
 					<td th:text="${user.email}">email@email.com</td>
 					<td th:text="${user.name}">Nombre del usuario</td>
@@ -35,12 +58,17 @@
 						th:id="${'btnAddFriend' + user.email}" th:href="${'/invitation/add/' + user.id}"
 						th:text="#{users.addFriend}">Agregar amigo</a>
 					</td>
-					<td><a sec:authorize="hasRole('ROLE_ADMIN')"
-						th:href="${'/user/delete/' + user.id}" th:text="#{users.delete}">Eliminar</a></td>
+					<td><input type="checkbox"
+						name="isGoingToBeDeleted"
+						th:checked="false"
+						id="selectButton"
+						sec:authorize="hasRole('ROLE_ADMIN')"/>
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	
 	<footer sec:authorize="!hasRole('ROLE_ADMIN')"
 		th:replace="fragments/pagination" />
 </div>

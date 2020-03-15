@@ -145,7 +145,7 @@ public class UsersController {
 		model.addAttribute("user", usersService.getUser(id));
 		return "user/details";
 	}
-
+	
 	@RequestMapping("/user/delete/{id}")
 	public String delete(@PathVariable Long id) {
 		usersService.deleteUser(id);
