@@ -14,8 +14,7 @@ import com.uniovi.entities.User;
 import com.uniovi.repositories.FriendshipRepository;
 
 /**
- * This class is aimed to define the services
- * for the friendship functionalities
+ * This class is aimed to define the services for the friendship functionalities
  * 
  * @author Nerea Valdés Egocheaga
  *
@@ -26,11 +25,25 @@ public class FriendshipService {
     @Autowired
     private FriendshipRepository friendshipRepository;
 
+    /**
+     * Method to add a friendship formed by two users
+     * 
+     * @param user1
+     * @param user2
+     */
     public void addFriendship(User user1, User user2) {
 	Friendship friendship = new Friendship(user1, user2);
 	friendshipRepository.save(friendship);
     }
 
+    /**
+     * Method to oobtain a Page of Users that are friends of a user passed by
+     * parameter.
+     * 
+     * @param pageable
+     * @param user1
+     * @return
+     */
     public Page<User> getFriendsOfUser(Pageable pageable, User user1) {
 	Page<Friendship> friends = friendshipRepository.findAllOfUser(pageable,
 		user1);
@@ -38,12 +51,25 @@ public class FriendshipService {
 	return getFriendsOf(user1, friends);
     }
 
+    /**
+     * Method to obtain the friendship of two users
+     * @param user1
+     * @param user2
+     * @return
+     */
     public Friendship getFriendsOfUser(User user1, User user2) {
 	Friendship friends = friendshipRepository.findByUsers(user1, user2);
 
 	return friends;
     }
 
+    /**
+     * Method to obtain a Page of Users that are friends of a user
+     * It checks each pair not to return repeated users.
+     * @param user1
+     * @param friendships
+     * @return
+     */
     private Page<User> getFriendsOf(User user1, Page<Friendship> friendships) {
 	List<User> friends = new LinkedList<User>();
 
@@ -58,10 +84,6 @@ public class FriendshipService {
 	}
 
 	return new PageImpl<User>(friends);
-    }
-
-    public Friendship getFriendship(User userRequesting, User userResponding) {
-	return friendshipRepository.findByUsers(userRequesting, userResponding);
     }
 
 }

@@ -27,6 +27,11 @@ public class SecurityService {
     private static final Logger logger = LoggerFactory
 	    .getLogger(SecurityService.class);
 
+    /**
+     * Method to obtain the username of the user logged in
+     * 
+     * @return
+     */
     public String findLoggedInEmail() {
 	Object userDetails = SecurityContextHolder.getContext()
 		.getAuthentication().getDetails();
@@ -37,6 +42,12 @@ public class SecurityService {
 	return null;
     }
 
+    /**
+     * Method to authenticate a user with a username and a password
+     * 
+     * @param email
+     * @param password
+     */
     public void autoLogin(String email, String password) {
 	UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 	UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(

@@ -26,6 +26,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UsersRepository usersRepository;
 
+    /**
+     * Method to obtain de user details of a user by its username (email)
+     * 
+     * @param email
+     * @return
+     */
     @Override
     public UserDetails loadUserByUsername(String email) {
 	User user = usersRepository.findByEmail(email);
