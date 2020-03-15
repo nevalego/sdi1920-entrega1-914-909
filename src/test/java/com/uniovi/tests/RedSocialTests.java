@@ -33,15 +33,12 @@ public class RedSocialTests {
 	// y desactivar las actualizacioens automáticas):
 
 	// Rutas Miguel
-	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver024 = "D:\\Universidad\\SDI\\Pruebas Selenium\\geckodriver024win64.exe";
+	//static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+	//static String Geckdriver024 = "D:\\Universidad\\SDI\\Pruebas Selenium\\geckodriver024win64.exe";
 
 	// Rutas Nerea
-	// static String PathFirefox65 = "/Archivos de programa/Mozilla
-	// Firefox/firefox.exe";
-	// static String Geckdriver024 = "/Users/nerea/Documents/2 SEMESTRE/SDI/5. Web
-	// testing con
-	// Selenium/PL-SDI-Sesión5-material/PL-SDI-Sesión5-material/geckodriver024win64.exe";
+	 static String PathFirefox65 = "/Archivos de programa/Mozilla Firefox/firefox.exe";
+	 static String Geckdriver024 = "/Users/nerea/Documents/2 SEMESTRE/SDI/5. Web testing con Selenium/PL-SDI-Sesión5-material/PL-SDI-Sesión5-material/geckodriver024win64.exe";
 
 	// Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
@@ -420,9 +417,9 @@ public class RedSocialTests {
 		SeleniumUtils.textoPresentePagina(driver, "maral@gmail.com");
 		SeleniumUtils.textoPresentePagina(driver, "pelaval@gmail.com");
 		SeleniumUtils.textoPresentePagina(driver, "mariar@gmail.com");
-
+		SeleniumUtils.textoPresentePagina(driver, "lucasnu@gmail.com");
+		
 		// Comprobamos que no aparece ninguno mas
-		SeleniumUtils.textoNoPresentePagina(driver, "lucasnu@gmail.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "pedrod@gmail.com");
 
 	}
