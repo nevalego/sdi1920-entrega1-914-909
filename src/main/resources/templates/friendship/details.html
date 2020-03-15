@@ -23,7 +23,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="publication: ${publicationList}">
+					<tr th:each="publication : ${publicationFriendList}">
 						<td th:text="${publication.id}">1</td>
 						<td th:text="${publication.title}">Titulo</td>
 						<td th:text="${publication.text}">Texto</td>

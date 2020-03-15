@@ -1,6 +1,7 @@
 package com.uniovi.controllers;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.uniovi.entities.Publication;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendshipService;
 import com.uniovi.services.PublicationsService;
@@ -69,9 +71,10 @@ public class FriendshipController {
 	if (friendshipService.getFriendshipOfUsers(user2,user1) == null) {
 	    return "redirect:/user/list";
 	}
+	
+	List<Publication> publications =publicationsService.getPublicationsForUser(user2);
 	model.addAttribute("user", user2);
-	model.addAttribute(" publicationList",
-		publicationsService.getPublicationsForUser(user1));
+	model.addAttribute("publicationFriendList",publications);
 	return "friendship/details";
     }
 

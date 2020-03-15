@@ -597,7 +597,7 @@ public class RedSocialTests {
 	public void Prueba28() {
 		// Intento 1, comprobamos que si intentamos acceder al perfil de una persona
 		// sin loggearse nos lleva directamente a identificar
-		driver.navigate().to("http://localhost:8091/friend/details/10");
+		driver.navigate().to("http://localhost:8091/friendship/details/10");
 		SeleniumUtils.textoPresentePagina(driver, "Identificate");
 
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -607,7 +607,7 @@ public class RedSocialTests {
 
 		// Nos dirigimos directamente al perfil de amigo de maral@gmail.com
 		// Entre la cual no comparten amistad
-		driver.navigate().to("http://localhost:8091/friend/details/10");
+		driver.navigate().to("http://localhost:8091/friendship/details/10");
 
 		// Comprobamos que nos redirige a la pagina de amigos
 		PO_UserListView.checkUserListText(driver, PO_Properties.getSPANISH());
