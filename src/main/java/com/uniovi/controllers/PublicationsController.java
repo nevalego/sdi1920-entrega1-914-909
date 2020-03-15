@@ -18,6 +18,7 @@ import com.uniovi.services.UsersService;
 
 /**
  * This class is aimed to receive the requests for publications
+ * 
  * @author Nerea Valdés Egocheaga
  *
  */
@@ -30,6 +31,12 @@ public class PublicationsController {
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method to receive the request of listing all publications of a user
+     * 
+     * @param model
+     * @return
+     */
     @RequestMapping("/publication/list")
     public String getList(Model model) {
 	Authentication auth = SecurityContextHolder.getContext()
@@ -41,18 +48,24 @@ public class PublicationsController {
 	return "publication/list";
     }
 
-    @RequestMapping("/publication/list/update")
-    public String updateList(Model model) {
-	model.addAttribute("publicationList",
-		publicationsService.getPublications());
-	return "publication/list :: tablePublications";
-    }
-
+    /**
+     * Method to receive the request of the form to add a publication
+     * 
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/publication/add")
     public String getPublication(Model model) {
 	return "publication/add";
     }
 
+    /**
+     * Method to receive the request of adding a new publications of a user
+     * logged in
+     * 
+     * @param publication
+     * @return
+     */
     @RequestMapping(value = "/publication/add", method = RequestMethod.POST)
     public String setPublication(@ModelAttribute Publication publication) {
 	Authentication auth = SecurityContextHolder.getContext()

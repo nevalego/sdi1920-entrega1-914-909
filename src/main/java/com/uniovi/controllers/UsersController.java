@@ -28,6 +28,7 @@ import com.uniovi.validators.SignUpFormValidator;
 
 /**
  * This class is aimed to receive the requests for users
+ * 
  * @author Nerea Valdés Egocheaga
  *
  */
@@ -45,12 +46,26 @@ public class UsersController {
     @Autowired
     private RolesService rolesService;
 
+    /**
+     * Method to receive request to obtaine the form to sign up an anonymous
+     * user
+     * 
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
 	model.addAttribute("user", new User());
 	return "signup";
     }
 
+    /**
+     * Method to receive the request of signing up a user
+     * 
+     * @param user
+     * @param result
+     * @return
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signup(@Validated User user, BindingResult result) {
 	signUpFormValidator.validate(user, result);
@@ -63,6 +78,13 @@ public class UsersController {
 	return "redirect:home";
     }
 
+    /**
+     * Method to receive the request of the form to log in a user
+     * 
+     * @param error
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(
 	    @RequestParam(value = "error", required = false) String error,
@@ -73,6 +95,14 @@ public class UsersController {
 	return "login";
     }
 
+    /**
+     * Method to receive the request of obtaining the home page
+     * 
+     * @param model
+     * @param pageable
+     * @param searchText
+     * @return
+     */
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
     public String home(Model model, Pageable pageable, String searchText) {
 	Authentication auth = SecurityContextHolder.getContext()
@@ -109,6 +139,15 @@ public class UsersController {
 	return "home";
     }
 
+    /**
+     * Method to receive the request of listing the users when a user is logged
+     * in
+     * 
+     * @param model
+     * @param pageable
+     * @param searchText
+     * @return
+     */
     @RequestMapping("/user/list")
     public String getListado(Model model, Pageable pageable,
 	    String searchText) {
@@ -146,45 +185,39 @@ public class UsersController {
 	return "user/list";
     }
 
+    /**
+     * Method to receive the request of the form to add users
+     * 
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/user/add")
     public String getUser(Model model) {
 	model.addAttribute("rolesList", rolesService.getRoles());
 	return "user/add";
     }
 
+    /**
+     * Method to receive the request to add a new user
+     * 
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public String setUser(@ModelAttribute User user) {
 	usersService.addUser(user);
 	return "redirect:/user/list";
     }
 
-    @RequestMapping("/user/details/{id}")
-    public String getDetail(Model model, @PathVariable Long id) {
-	model.addAttribute("user", usersService.getUser(id));
-	return "user/details";
-    }
-
+    /**
+     * Method to receive the request of deleting a user by its id
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping("/user/delete/{id}")
     public String delete(@PathVariable Long id) {
 	usersService.deleteUser(id);
 	return "redirect:/user/list";
-    }
-
-    @RequestMapping(value = "/user/edit/{id}")
-    public String getEdit(Model model, @PathVariable Long id) {
-	User user = usersService.getUser(id);
-	model.addAttribute("user", user);
-	return "user/edit";
-    }
-
-    @RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-    public String setEdit(Model model, @PathVariable Long id,
-	    @ModelAttribute User user) {
-	User original = usersService.getUser(id);
-	original.setEmail(user.getEmail());
-	original.setName(user.getName());
-	original.setLastName(user.getLastName());
-	usersService.addUser(original);
-	return "redirect:/user/details/" + id;
     }
 }

@@ -57,7 +57,7 @@ public class FriendshipService {
      * @param user2
      * @return
      */
-    public Friendship getFriendsOfUser(User user1, User user2) {
+    public Friendship getFriendshipOfUsers(User user1, User user2) {
 	Friendship friends = friendshipRepository.findByUsers(user1, user2);
 
 	return friends;

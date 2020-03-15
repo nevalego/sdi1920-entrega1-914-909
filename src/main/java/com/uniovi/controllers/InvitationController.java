@@ -23,6 +23,7 @@ import com.uniovi.services.UsersService;
 
 /**
  * This class is aimed to receive the requests for invitations
+ * 
  * @author Nerea Valdés Egocheaga
  *
  */
@@ -38,6 +39,16 @@ public class InvitationController {
     @Autowired
     private FriendshipService friendshipService;
 
+    /**
+     * Method to receive the request for adding a new invitation from the logged
+     * in user to another user
+     * 
+     * @param id
+     * @param pageable
+     * @param model
+     * @param redirectAttrs
+     * @return
+     */
     @RequestMapping(value = "/invitation/add/{id}")
     public String inviteUserToFriendship(@PathVariable Long id,
 	    Pageable pageable, Model model, RedirectAttributes redirectAttrs) {
@@ -49,8 +60,8 @@ public class InvitationController {
 
 	Invitation invitation = invitationsService
 		.getInvitationFromTo(userRequesting, userResponding);
-	Friendship friendship = friendshipService.getFriendship(userRequesting,
-		userResponding);
+	Friendship friendship = friendshipService
+		.getFriendshipOfUsers(userRequesting, userResponding);
 	if (invitation == null && friendship == null)
 	    invitationsService.addInvitationFromTo(userRequesting,
 		    userResponding);
@@ -68,6 +79,14 @@ public class InvitationController {
 	return "redirect:/user/list";
     }
 
+    /**
+     * Method to receive the request for listing the invitations received by a
+     * user
+     * 
+     * @param model
+     * @param pageable
+     * @return
+     */
     @RequestMapping(value = "/invitation/list")
     public String getListado(Model model, Pageable pageable) {
 	Authentication auth = SecurityContextHolder.getContext()
@@ -83,6 +102,15 @@ public class InvitationController {
 	return "invitation/list";
     }
 
+    /**
+     * Method to receive the request for the logged in user to accept an
+     * invitation of another user
+     * 
+     * @param model
+     * @param invitationId
+     * @param pageable
+     * @return
+     */
     @RequestMapping(value = "/invitation/accept/{invitationId}")
     public String acceptInvitation(Model model, @PathVariable Long invitationId,
 	    Pageable pageable) {
