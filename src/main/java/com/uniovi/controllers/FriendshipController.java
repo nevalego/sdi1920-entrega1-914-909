@@ -10,10 +10,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendshipService;
+import com.uniovi.services.PublicationsService;
 import com.uniovi.services.UsersService;
 
 /**
@@ -31,9 +33,12 @@ public class FriendshipController {
     @Autowired
     private FriendshipService friendshipService;
 
+    @Autowired
+    private PublicationsService publicationsService;
+
     /**
-     * Method to receive request for listing friends of 
-     * logged user.
+     * Method to receive request for listing friends of logged user.
+     * 
      * @param model
      * @param pageable
      * @return
@@ -50,6 +55,24 @@ public class FriendshipController {
 	model.addAttribute("friendsList", friends.getContent());
 	model.addAttribute("page", friends);
 	return "friendship/list";
+    }
+
+    @RequestMapping("/firend/details/{id}")
+    public String getFriendDetails(Model model, @PathVariable Long id) {
+	Authentication auth = SecurityContextHolder.getContext()
+		.getAuthentication();
+	String email = auth.getName();
+	User user1 = usersService.getUserByEmail(email);
+
+	// Se comprueba que los usuarios son amigos
+	// En caso de no serlo se le redirige a la lista de amigos
+	if (friendshipService.getFriendshipOfUsers(usersService.getUserByEmail(email),user1) == null) {
+	    return "redirect:/user/list";
+	}
+	model.addAttribute("user", user1);
+	model.addAttribute(" publicationList",
+		publicationsService.getPublicationsForUser(user1));
+	return "friendship/details";
     }
 
 }
