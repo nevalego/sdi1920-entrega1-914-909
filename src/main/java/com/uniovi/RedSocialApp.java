@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RedSocialApp {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RedSocialApp.class, args);
-	}
+    public static void main(String[] args) {
+	SpringApplication.run(RedSocialApp.class, args);
+    }
 
-	
 }

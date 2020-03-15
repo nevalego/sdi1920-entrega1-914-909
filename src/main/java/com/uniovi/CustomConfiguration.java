@@ -17,31 +17,31 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class CustomConfiguration implements WebMvcConfigurer {
 
-	
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		int [] values = new int [] {0,5};
-		PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
-		resolver.setFallbackPageable(PageRequest.of(values[0], values[1]));
-		argumentResolvers.add(resolver);
-	}
-	
-	@Bean
-	public LocaleResolver localeResolver() {
-		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-		localeResolver.setDefaultLocale(new Locale("es", "ES"));
-		return localeResolver;
-	}
+    @Override
+    public void addArgumentResolvers(
+	    List<HandlerMethodArgumentResolver> argumentResolvers) {
+	int[] values = new int[] { 0, 5 };
+	PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+	resolver.setFallbackPageable(PageRequest.of(values[0], values[1]));
+	argumentResolvers.add(resolver);
+    }
 
-	@Bean
-	public LocaleChangeInterceptor localeChangeInterceptor() {
-		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("lang");
-		return localeChangeInterceptor;
-	}
+    @Bean
+    public LocaleResolver localeResolver() {
+	SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+	localeResolver.setDefaultLocale(new Locale("es", "ES"));
+	return localeResolver;
+    }
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(localeChangeInterceptor());
-	}
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+	LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+	localeChangeInterceptor.setParamName("lang");
+	return localeChangeInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(localeChangeInterceptor());
+    }
 }

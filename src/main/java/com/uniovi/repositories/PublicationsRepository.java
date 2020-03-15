@@ -8,9 +8,10 @@ import org.springframework.data.repository.CrudRepository;
 import com.uniovi.entities.Publication;
 import com.uniovi.entities.User;
 
-public interface PublicationsRepository extends CrudRepository<Publication, Long>{
+public interface PublicationsRepository
+	extends CrudRepository<Publication, Long> {
 
-	@Query("SELECT p FROM Publication p WHERE p.user = ?1")
-	List<Publication> findAllByUser(User activeUser);
+    @Query("SELECT p FROM Publication p WHERE p.user = ?1")
+    List<Publication> findAllByUser(User activeUser);
 
 }

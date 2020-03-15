@@ -19,40 +19,44 @@ import com.uniovi.services.UsersService;
 @Controller
 public class PublicationsController {
 
-	@Autowired
-	private PublicationsService publicationsService;
+    @Autowired
+    private PublicationsService publicationsService;
 
-	@Autowired
-	private UsersService usersService;
+    @Autowired
+    private UsersService usersService;
 
-	@RequestMapping("/publication/list")
-	public String getList(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("publicationList", publicationsService.getPublicationsForUser(activeUser));
-		return "publication/list";
-	}
+    @RequestMapping("/publication/list")
+    public String getList(Model model) {
+	Authentication auth = SecurityContextHolder.getContext()
+		.getAuthentication();
+	String email = auth.getName();
+	User activeUser = usersService.getUserByEmail(email);
+	model.addAttribute("publicationList",
+		publicationsService.getPublicationsForUser(activeUser));
+	return "publication/list";
+    }
 
-	@RequestMapping("/publication/list/update")
-	public String updateList(Model model) {
-		model.addAttribute("publicationList", publicationsService.getPublications());
-		return "publication/list :: tablePublications";
-	}
+    @RequestMapping("/publication/list/update")
+    public String updateList(Model model) {
+	model.addAttribute("publicationList",
+		publicationsService.getPublications());
+	return "publication/list :: tablePublications";
+    }
 
-	@RequestMapping(value = "/publication/add")
-	public String getPublication(Model model) {
-		return "publication/add";
-	}
+    @RequestMapping(value = "/publication/add")
+    public String getPublication(Model model) {
+	return "publication/add";
+    }
 
-	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
-	public String setPublication(@ModelAttribute Publication publication) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		publication.setDate(new Date());
-		publication.setUser(activeUser);
-		publicationsService.addPublication(publication);
-		return "redirect:/publication/list";
-	}
+    @RequestMapping(value = "/publication/add", method = RequestMethod.POST)
+    public String setPublication(@ModelAttribute Publication publication) {
+	Authentication auth = SecurityContextHolder.getContext()
+		.getAuthentication();
+	String email = auth.getName();
+	User activeUser = usersService.getUserByEmail(email);
+	publication.setDate(new Date());
+	publication.setUser(activeUser);
+	publicationsService.addPublication(publication);
+	return "redirect:/publication/list";
+    }
 }

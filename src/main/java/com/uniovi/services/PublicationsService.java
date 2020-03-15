@@ -14,30 +14,29 @@ import com.uniovi.repositories.PublicationsRepository;
 @Service
 public class PublicationsService {
 
-	@Autowired
-	private PublicationsRepository publicationsRepository;
+    @Autowired
+    private PublicationsRepository publicationsRepository;
 
-	public List<Publication> getPublications() {
-		List<Publication> publications = new ArrayList<Publication>();
-		publicationsRepository.findAll().forEach(publications::add);
-		return publications;
-	}
+    public List<Publication> getPublications() {
+	List<Publication> publications = new ArrayList<Publication>();
+	publicationsRepository.findAll().forEach(publications::add);
+	return publications;
+    }
 
-	public Publication getPublication(Long id) {
-		return publicationsRepository.findById(id).get();
-	}
+    public Publication getPublication(Long id) {
+	return publicationsRepository.findById(id).get();
+    }
 
-	public void addPublication(Publication publication) {
-		// Si en Id es null le asignamos el ultimo + 1 de la lista
-		publication.setDate(new Date()); // Fecha de publicación
-		publicationsRepository.save(publication);
-	}
+    public void addPublication(Publication publication) {
+	publication.setDate(new Date()); // Fecha de publicación
+	publicationsRepository.save(publication);
+    }
 
-	public void deletePublication(Long id) {
-		publicationsRepository.deleteById(id);
-	}
+    public void deletePublication(Long id) {
+	publicationsRepository.deleteById(id);
+    }
 
-	public List<Publication> getPublicationsForUser(User activeUser) {
-		return publicationsRepository.findAllByUser(activeUser);
-	}
+    public List<Publication> getPublicationsForUser(User activeUser) {
+	return publicationsRepository.findAllByUser(activeUser);
+    }
 }

@@ -16,44 +16,45 @@ import com.uniovi.repositories.FriendshipRepository;
 @Service
 public class FriendshipService {
 
-	@Autowired
-	private FriendshipRepository friendshipRepository;
-	
-	public void addFriendship(User user1, User user2) {
-		Friendship friendship = new Friendship(user1,user2);
-		friendshipRepository.save(friendship);
+    @Autowired
+    private FriendshipRepository friendshipRepository;
+
+    public void addFriendship(User user1, User user2) {
+	Friendship friendship = new Friendship(user1, user2);
+	friendshipRepository.save(friendship);
+    }
+
+    public Page<User> getFriendsOfUser(Pageable pageable, User user1) {
+	Page<Friendship> friends = friendshipRepository.findAllOfUser(pageable,
+		user1);
+
+	return getFriendsOf(user1, friends);
+    }
+
+    public Friendship getFriendsOfUser(User user1, User user2) {
+	Friendship friends = friendshipRepository.findByUsers(user1, user2);
+
+	return friends;
+    }
+
+    private Page<User> getFriendsOf(User user1, Page<Friendship> friendships) {
+	List<User> friends = new LinkedList<User>();
+
+	for (Friendship friendship : friendships.getContent()) {
+	    // Si el usuario 1 es el logeado, guardar su amigo el usuario2
+	    if (friendship.getUser1().getId() == user1.getId()) {
+		friends.add(friendship.getUser2());
+		// Si el usuario 2 es el logeado, guardar su amigo el usuario1
+	    } else if (friendship.getUser2().getId() == user1.getId()) {
+		friends.add(friendship.getUser1());
+	    }
 	}
 
-	public Page<User> getFriendsOfUser(Pageable pageable, User user1) {
-		Page<Friendship> friends = friendshipRepository.findAllOfUser(pageable, user1);
-		
-		return getFriendsOf(user1, friends); 
-	}
-	
-	public Friendship getFriendsOfUser( User user1, User user2) {
-		Friendship friends = friendshipRepository.findByUsers(user1, user2);
-		
-		return friends; 
-	}
+	return new PageImpl<User>(friends);
+    }
 
-	private Page<User> getFriendsOf(User user1, Page<Friendship> friendships) {
-		List<User> friends = new LinkedList<User>();
-		
-		for (Friendship friendship : friendships.getContent()) {
-			// Si el usuario 1 es el logeado, guardar su amigo el usuario2
-			if( friendship.getUser1().getId() == user1.getId() ) {
-				friends.add(friendship.getUser2());
-			// Si el usuario 2 es el logeado, guardar su amigo el usuario1
-			} else if (friendship.getUser2().getId() == user1.getId()) {
-				friends.add(friendship.getUser1());
-			}
-		}
-		
-		return new PageImpl<User>(friends);
-	}
-
-	public Friendship getFriendship(User userRequesting, User userResponding) {
-		return friendshipRepository.findByUsers(userRequesting, userResponding);
-	}
+    public Friendship getFriendship(User userRequesting, User userResponding) {
+	return friendshipRepository.findByUsers(userRequesting, userResponding);
+    }
 
 }

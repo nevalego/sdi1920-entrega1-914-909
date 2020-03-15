@@ -28,144 +28,158 @@ import com.uniovi.validators.SignUpFormValidator;
 
 @Controller
 public class UsersController {
-	@Autowired
-	private UsersService usersService;
+    @Autowired
+    private UsersService usersService;
 
-	@Autowired
-	private SecurityService securityService;
+    @Autowired
+    private SecurityService securityService;
 
-	@Autowired
-	private SignUpFormValidator signUpFormValidator;
+    @Autowired
+    private SignUpFormValidator signUpFormValidator;
 
-	@Autowired
-	private RolesService rolesService;
+    @Autowired
+    private RolesService rolesService;
 
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public String signup(Model model) {
-		model.addAttribute("user", new User());
-		return "signup";
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signup(Model model) {
+	model.addAttribute("user", new User());
+	return "signup";
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signup(@Validated User user, BindingResult result) {
+	signUpFormValidator.validate(user, result);
+	if (result.hasErrors()) {
+	    return "signup";
 	}
+	user.setRole(rolesService.getRoles()[0]);
+	usersService.addUser(user);
+	securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+	return "redirect:home";
+    }
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signup(@Validated User user, BindingResult result) {
-		signUpFormValidator.validate(user, result);
-		if (result.hasErrors()) {
-			return "signup";
-		}
-		user.setRole(rolesService.getRoles()[0]);
-		usersService.addUser(user);
-		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
-		return "redirect:home";
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(
+	    @RequestParam(value = "error", required = false) String error,
+	    Model model) {
+	if (error != null) {
+	    model.addAttribute("error", error);
 	}
+	return "login";
+    }
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
-		if (error != null) {
-			model.addAttribute("error", error);
-		}
-		return "login";
+    @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+    public String home(Model model, Pageable pageable, String searchText) {
+	Authentication auth = SecurityContextHolder.getContext()
+		.getAuthentication();
+	String email = auth.getName();
+	User activeUser = usersService.getUserByEmail(email);
+	List<User> users = new ArrayList<User>();
+
+	if (activeUser.getRole().equals(rolesService.getRoles()[1])) {
+	    // Si es Admin devuelve todos los usuarios del sistema
+	    if (searchText != null && !searchText.isEmpty()) {
+		users = usersService
+			.searchUserByNameLastNameAndEmail(searchText);
+	    } else {
+		users = usersService.getUsers();
+	    }
+	    model.addAttribute("usersList", users);
+
+	} else {
+	    Page<User> usersPageable = new PageImpl<User>(
+		    new LinkedList<User>());
+
+	    if (searchText != null && !searchText.isEmpty()) {
+		usersPageable = usersService
+			.searchUserByNameLastNameAndEmail(pageable, searchText);
+	    } else {
+		usersPageable = usersService.getUsersForUser(pageable,
+			activeUser);
+	    }
+	    users = usersPageable.getContent();
+	    model.addAttribute("usersList", users);
+	    model.addAttribute("page", usersPageable);
 	}
+	return "home";
+    }
 
-	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model, Pageable pageable, String searchText) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		List<User> users = new ArrayList<User>();
+    @RequestMapping("/user/list")
+    public String getListado(Model model, Pageable pageable,
+	    String searchText) {
+	Authentication auth = SecurityContextHolder.getContext()
+		.getAuthentication();
+	String email = auth.getName();
+	User activeUser = usersService.getUserByEmail(email);
+	List<User> users = new ArrayList<User>();
 
-		if (activeUser.getRole().equals(rolesService.getRoles()[1])) {
-			// Si es Admin devuelve todos los usuarios del sistema
-			if (searchText != null && !searchText.isEmpty()) {
-				users = usersService.searchUserByNameLastNameAndEmail(searchText);
-			} else {
-				users = usersService.getUsers();
-			}
-			model.addAttribute("usersList", users);
+	if (activeUser.getRole().equals(rolesService.getRoles()[1])) {
+	    // Si es Admin devuelve todos los usuarios del sistema
+	    if (searchText != null && !searchText.isEmpty()) {
+		users = usersService
+			.searchUserByNameLastNameAndEmail(searchText);
+	    } else {
+		users = usersService.getUsers();
+	    }
+	    model.addAttribute("usersList", users);
 
-		} else {
-			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
+	} else {
+	    Page<User> usersPageable = new PageImpl<User>(
+		    new LinkedList<User>());
 
-			if (searchText != null && !searchText.isEmpty()) {
-				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable, searchText);
-			} else {
-				usersPageable = usersService.getUsersForUser(pageable, activeUser);
-			}
-			users = usersPageable.getContent();
-			model.addAttribute("usersList", users);
-			model.addAttribute("page", usersPageable);
-		}
-		return "home";
+	    if (searchText != null && !searchText.isEmpty()) {
+		usersPageable = usersService
+			.searchUserByNameLastNameAndEmail(pageable, searchText);
+	    } else {
+		usersPageable = usersService.getUsersForUser(pageable,
+			activeUser);
+	    }
+	    users = usersPageable.getContent();
+	    model.addAttribute("usersList", users);
+	    model.addAttribute("page", usersPageable);
 	}
+	return "user/list";
+    }
 
-	@RequestMapping("/user/list")
-	public String getListado(Model model, Pageable pageable, String searchText) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		List<User> users = new ArrayList<User>();
+    @RequestMapping(value = "/user/add")
+    public String getUser(Model model) {
+	model.addAttribute("rolesList", rolesService.getRoles());
+	return "user/add";
+    }
 
-		if (activeUser.getRole().equals(rolesService.getRoles()[1])) {
-			// Si es Admin devuelve todos los usuarios del sistema
-			if (searchText != null && !searchText.isEmpty()) {
-				users = usersService.searchUserByNameLastNameAndEmail(searchText);
-			} else {
-				users = usersService.getUsers();
-			}
-			model.addAttribute("usersList", users);
+    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    public String setUser(@ModelAttribute User user) {
+	usersService.addUser(user);
+	return "redirect:/user/list";
+    }
 
-		} else {
-			Page<User> usersPageable = new PageImpl<User>(new LinkedList<User>());
+    @RequestMapping("/user/details/{id}")
+    public String getDetail(Model model, @PathVariable Long id) {
+	model.addAttribute("user", usersService.getUser(id));
+	return "user/details";
+    }
 
-			if (searchText != null && !searchText.isEmpty()) {
-				usersPageable = usersService.searchUserByNameLastNameAndEmail(pageable, searchText);
-			} else {
-				usersPageable = usersService.getUsersForUser(pageable, activeUser);
-			}
-			users = usersPageable.getContent();
-			model.addAttribute("usersList", users);
-			model.addAttribute("page", usersPageable);
-		}
-		return "user/list";
-	}
+    @RequestMapping("/user/delete/{id}")
+    public String delete(@PathVariable Long id) {
+	usersService.deleteUser(id);
+	return "redirect:/user/list";
+    }
 
-	@RequestMapping(value = "/user/add")
-	public String getUser(Model model) {
-		model.addAttribute("rolesList", rolesService.getRoles());
-		return "user/add";
-	}
+    @RequestMapping(value = "/user/edit/{id}")
+    public String getEdit(Model model, @PathVariable Long id) {
+	User user = usersService.getUser(id);
+	model.addAttribute("user", user);
+	return "user/edit";
+    }
 
-	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
-	public String setUser(@ModelAttribute User user) {
-		usersService.addUser(user);
-		return "redirect:/user/list";
-	}
-
-	@RequestMapping("/user/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("user", usersService.getUser(id));
-		return "user/details";
-	}
-	
-	@RequestMapping("/user/delete/{id}")
-	public String delete(@PathVariable Long id) {
-		usersService.deleteUser(id);
-		return "redirect:/user/list";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}")
-	public String getEdit(Model model, @PathVariable Long id) {
-		User user = usersService.getUser(id);
-		model.addAttribute("user", user);
-		return "user/edit";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-		User original = usersService.getUser(id);
-		original.setEmail(user.getEmail());
-		original.setName(user.getName());
-		original.setLastName(user.getLastName());
-		usersService.addUser(original);
-		return "redirect:/user/details/" + id;
-	}
+    @RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
+    public String setEdit(Model model, @PathVariable Long id,
+	    @ModelAttribute User user) {
+	User original = usersService.getUser(id);
+	original.setEmail(user.getEmail());
+	original.setName(user.getName());
+	original.setLastName(user.getLastName());
+	usersService.addUser(original);
+	return "redirect:/user/details/" + id;
+    }
 }
