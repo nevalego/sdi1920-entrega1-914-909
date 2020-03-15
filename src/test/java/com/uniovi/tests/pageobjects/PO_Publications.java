@@ -29,11 +29,6 @@ public class PO_Publications extends PO_NavView {
 		// Esperamos a que se cargue el texto de la página
 		SeleniumUtils.textoPresentePagina(driver, p.getString("publications.text", language));
 
-		// Esperamos a que se cargue el boton de busqueda
-		SeleniumUtils.textoPresentePagina(driver, p.getString("publications.update", language));
-		// Esperamos a que se cargue la columna email
-		SeleniumUtils.textoPresentePagina(driver, p.getString("publications.info.details", language));
-
 		// Esperamos a que se cargue la columna nombre
 		SeleniumUtils.textoPresentePagina(driver, p.getString("publication.info.title", language));
 		// Esperamos a que se cargue la columna apellidos
